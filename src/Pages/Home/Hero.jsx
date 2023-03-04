@@ -18,12 +18,12 @@ const HeroSection = () => {
   return (
     <Hero>
       <Grid container sx={{ maxWidth: "89%",justifyContent:"space-between",alignItems:"center" }}>
-        <Grid item sx={{ width: "50%", p: "1rem", maxWidth: "80%", alignItems: "center", justifyContent: "center" }}>
+        <Grid item sx={{ width: {md:"50%",xs:"100%"}, p: "1rem", maxWidth: "80%", alignItems: "center", justifyContent: "center" }}>
           <Typography variant="h3" sx={{ color: '#fff', fontWeight: "700" }}>Let's Help Each & Every Creature of God</Typography>
           <Typography variant="body1" sx={{ color: '#f2f2f2', mt: '1rem', fontSize: "19px", fontWeight: "600" }}>Enter your lost pet's information into the form above to start spreading awareness. We will create a lost pet flyer and post it to your city's Lost & Found Pet Facebook page to start reaching users in your area.</Typography>
           <Button variant="contained" sx={{ mt: "1.5rem" }}>Join to Create Impact !</Button>
         </Grid>
-        <Grid item sx={{ background: "#ffffffd4", width: "40%", p: '1.5rem', borderRadius: "7px" }}>
+        <Grid item sx={{ background: "#ffffffd4", width: {md:"40%",xs:"100%"}, p: '1.5rem', borderRadius: "7px" }}>
         <Typography variant="h5" sx={{ color: '#212121', fontWeight: "600" }}>Report A Rescue Near You!</Typography>
         <Typography variant="body1" sx={{ color: '#212121', fontWeight: "500",my:"1rem" }}>Enter your pet's information to instantly start spreading local awareness.</Typography>
           <Stack>
