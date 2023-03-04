@@ -4,7 +4,7 @@ import MuiButton from "@mui/material/Button";
 
 export const colors = {
   primary:"#329c92",
-  primaryicons:"#006e64"
+  primaryicons:"#000000d1"
 }
 
 export const Theme = createTheme({

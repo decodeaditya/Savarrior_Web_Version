@@ -1,8 +1,7 @@
-import { Person3Rounded } from '@mui/icons-material'
 import { Divider, Typography, Box, Grid } from '@mui/material'
 import React from 'react'
 import RescueCard from '../../Components/RescueCard'
-import { SquareButton,Button, colors } from '../../Theme'
+import { SquareButton, colors } from '../../Theme'
 
 const RescuesList = [
     {
@@ -18,7 +17,7 @@ const RescuesList = [
         location: "Parade Ground Prayagraj - 212343"
     },
     {
-        title: "Help Cows Of Uttrakhand",
+        title: "Help Cows Of Up Who are Going to Butcher House",
         img: "https://www.anipixels.com/photos/c7d3a7ae-c88e-4a30-92b7-194310b14ae4-f.jpg",
         name: "Aditya",
         location: "Parade Ground Prayagraj - 212343"
