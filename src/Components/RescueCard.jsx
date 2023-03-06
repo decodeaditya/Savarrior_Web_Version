@@ -6,7 +6,7 @@ import { colors, SquareButton } from '../Theme'
 const RescueCard = (props) => {
   return (
     <Box sx={{
-      width: '380px', background: '#fff', overflow: 'hidden', transition: 'all 0.3s ease', textAlign: 'left',
+      width: {md:'380px',xs:"90vw"}, background: '#fff', overflow: 'hidden',borderRadius:"8px", transition: 'all 0.3s ease', textAlign: 'left',
       margin: '13px',
       boxShadow: 'rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px',
       "&:hover": { boxShadow: 'rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px' }

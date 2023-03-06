@@ -2,13 +2,25 @@ import Header from "./Components/Header";
 import HomePage from "./Pages/Home/HomePage";
 import { ThemeProvider } from "@mui/material";
 import { Theme } from "./Theme";
-
+import Footer from "./Components/Footer";
+import { BrowserRouter, Routes,Route } from "react-router-dom";
+import RescuePage from "./Pages/Rescues/RescuePage";
+import AgencyPage from "./Pages/Agency/AgencyPage";
+import SingleAgency from "./Pages/SingleAgency/SingleAgency";
 
 function App() {
   return (
     <ThemeProvider theme={Theme}>
+      <BrowserRouter>
       <Header />
-      <HomePage/>
+      <Routes>
+        <Route path="/" index element={<HomePage/>}/>
+        <Route path="/rescues" index element={<RescuePage/>}/>
+        <Route path="/ngos-and-people" index element={<AgencyPage/>}/>
+        <Route path="/ngo/:slug/:id" index element={<SingleAgency/>}/>
+      </Routes>
+      </BrowserRouter>
+      <Footer />
     </ThemeProvider>
   );
 }
