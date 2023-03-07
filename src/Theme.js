@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from '@mui/material/';
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button"
 
@@ -15,8 +15,16 @@ export const Theme = createTheme({
     ].join(","),
     fontWeight: "800"
   },
-
- }
+  palette: {
+    primary: {
+       main: "#329c92" // This is an orange looking color
+              },
+    secondary: {
+       main: "#ffcc80" //Another orange-ish color
+               }
+          },
+}
+  
 );
 
 export const Button = styled(MuiButton)(({theme}) => ({
