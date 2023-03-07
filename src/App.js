@@ -15,7 +15,7 @@ function App() {
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
-      {route === "login" || route === "register" ? "" : <Header/>}
+      <Header/>
       <Routes>
         <Route path="/" index element={<HomePage/>}/>
         <Route path="/rescues" index element={<RescuePage/>}/>

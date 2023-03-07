@@ -3,7 +3,7 @@ import { Button, colors } from '../Theme'
 import { Container } from '@mui/system'
 import React, { useState } from 'react'
 import { HomeRounded, MenuRounded, PersonOutlineSharp } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
 const NavLink = styled(Link)((props) => ({
@@ -64,10 +64,13 @@ const Header = () => {
         setSideBarAnchorEl(null);
     };
 
+
+    const path = useLocation()
+    const slug = path.pathname
+
     return (
         <React.Fragment>
-
-            <Box>
+            <Box sx={{display:slug === "/register" || slug === "/login" ? "none" : "block"}}>
                 <AppBar sx={{ background: "#fff", fontSize: "25px", py: "0.5rem" }}>
                     <Container maxWidth="xl">
                         <Toolbar disableGutters sx={{ color: "#5f5f5f", display: "flex", alignItems: "center" }}>
@@ -125,9 +128,12 @@ const Header = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem onClick={handleProfileClose}>
-                    <Avatar /> Profile
-                </MenuItem>
+                <Link to="/login" style={{textDecoration:"none",color:"black"}}><MenuItem onClick={handleProfileClose}>
+                  Login
+                </MenuItem></Link>
+                <Link to="/register" style={{textDecoration:"none",color:"black"}}><MenuItem onClick={handleProfileClose}>
+                  Register
+                </MenuItem></Link>
             </Menu>
 
 
