@@ -25,10 +25,11 @@ export default function Register() {
             password: data.get('password'),
         });
     };
-    const [selectedValue, setSelectedValue] = React.useState('a');
+    const [selectedValue, setSelectedValue] = React.useState('Individual');
+    console.log(selectedValue)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSelectedValue(event.target.value);
+        setSelectedValue(event.target.value);
     };
 
     return (
@@ -66,21 +67,25 @@ export default function Register() {
                     <Typography component="h1" variant="h5">
                         Register
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                        <Radio
-                            checked={selectedValue === 'a'}
-                            onChange={handleChange}
-                            value="a"
-                            name="radio-buttons"
-                            inputProps={{ 'aria-label': 'A' }}
-                        />
-                        <Radio
-                            checked={selectedValue === 'b'}
-                            onChange={handleChange}
-                            value="b"
-                            name="radio-buttons"
-                            inputProps={{ 'aria-label': 'B' }}
-                        />
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: "2rem" }}>
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <Box sx={{ display: "flex", alignItems: "center", ml: "5px" }}>
+                                <Radio
+                                    checked={selectedValue === 'Individual'}
+                                    onChange={handleChange}
+                                    value="Individual"
+                                    name="radio-buttons"
+                                />Individual
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center", ml: "5px" }}>
+                                <Radio
+                                    checked={selectedValue === 'Organistion'}
+                                    onChange={handleChange}
+                                    value="Organistion"
+                                    name="radio-buttons"
+                                />Organisation
+                            </Box>
+                        </Box>
                         <TextField
                             margin="normal"
                             required
@@ -121,6 +126,7 @@ export default function Register() {
                             autoComplete="email"
                             autoFocus
                         />
+                        <Box sx={{ display: "flex", alignItems: "center", my: "15px", p: "15px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}><Typography >Profile Image :&nbsp; </Typography> <input type="file" id="avatar" accept='image/*' /></Box>
                         <SquareButton
                             type="submit"
                             fullWidth
