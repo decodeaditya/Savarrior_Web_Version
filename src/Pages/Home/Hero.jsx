@@ -31,6 +31,7 @@ const HeroSection = () => {
             <TextField label="Phone" sx={{ my: 1 }} />
             <TextField label="Animal" sx={{ my: 1 }} />
             <TextField label="Location" sx={{ my: 1 }} />
+            <TextField label="Image" sx={{ my: 1 }} />
           </Stack>
           <Button variant='contained' sx={{borderRadius:"3px",width:"100%",mt:'1rem'}} >Submit Details</Button>
         </Grid>
