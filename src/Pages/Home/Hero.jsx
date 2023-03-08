@@ -27,9 +27,10 @@ const HeroSection = () => {
         <Typography variant="h5" sx={{ color: '#212121', fontWeight: "600" }}>Report A Rescue Near You!</Typography>
         <Typography variant="body1" sx={{ color: '#212121', fontWeight: "500",my:"1rem" }}>Enter your pet's information to instantly start spreading local awareness.</Typography>
           <Stack>
-            <TextField label="Location" sx={{ my: 1 }} />
+            <TextField label="Name" sx={{ my: 1 }} />
             <TextField label="Phone" sx={{ my: 1 }} />
-            <TextField label="Priority" sx={{ my: 1 }} />
+            <TextField label="Animal" sx={{ my: 1 }} />
+            <TextField label="Location" sx={{ my: 1 }} />
           </Stack>
           <Button variant='contained' sx={{borderRadius:"3px",width:"100%",mt:'1rem'}} >Submit Details</Button>
         </Grid>
