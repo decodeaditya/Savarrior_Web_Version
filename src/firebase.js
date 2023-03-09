@@ -11,7 +11,7 @@ const firebaseConfig = {
   projectId: "savarrior-web",
   storageBucket: "savarrior-web.appspot.com",
   messagingSenderId: "310461744278",
-  appId: "1:310461744278:web:8656e60ffca9633cc26eb7"
+  appId: "1:310461744278:web:8656e60ffca9633cc26eb7",
 };
 
 // Initialize Firebase
