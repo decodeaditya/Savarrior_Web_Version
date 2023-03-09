@@ -2,13 +2,12 @@ import { LocationOnRounded } from '@mui/icons-material'
 import { Grid, Box, Typography, Divider, Chip } from '@mui/material'
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { SingleAgencyList } from '../../Data/SingleAgency'
 import { colors,Button } from '../../Theme'
 
 const SingleAgency = () => {
 
 
-  const { slug, id } = useParams()
+  const { slug} = useParams()
   const agencyName = slug.replace("-", " ")
 
   return (

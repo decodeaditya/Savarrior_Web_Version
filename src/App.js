@@ -11,7 +11,6 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 
 function App() {
-  const route = window?.location?.href.split("/")[3]
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>

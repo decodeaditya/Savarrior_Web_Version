@@ -2,8 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -12,11 +10,19 @@ import Typography from '@mui/material/Typography';
 import { SquareButton, colors } from '../Theme';
 import { Link } from 'react-router-dom';
 import { Radio } from '@mui/material';
+import { AuthContext } from '../Context/AuthContext';
 
 
 
 
 export default function Register() {
+
+
+    const {CurrentUser} = React.useContext(AuthContext)
+    const [name,setName] = React.useState(CurrentUser ? CurrentUser.displayName : "")
+    const [phone,setPhone] = React.useState(CurrentUser ? CurrentUser.phoneNumber : "")
+    {console.log(CurrentUser)}
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -90,11 +96,13 @@ export default function Register() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
+                            id="name"
                             label="Full Name"
-                            name="email"
-                            autoComplete="email"
+                            name="name"
+                            autoComplete="name"
                             autoFocus
+                            value={name}
+                            onChange={(e)=>setName(e.target.value)}
                         />
                         <TextField
                             margin="normal"
@@ -120,11 +128,13 @@ export default function Register() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
+                            id="phone"
                             label="Phone Number"
-                            name="email"
-                            autoComplete="email"
+                            name="phone"
+                            autoComplete="phone"
                             autoFocus
+                            value={phone}
+                            onChange={(e)=>setPhone(e.target.value)}
                         />
                         <Box sx={{ display: "flex", alignItems: "center", my: "15px", p: "15px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}><Typography >Profile Image :&nbsp; </Typography> <input type="file" id="avatar" accept='image/*' /></Box>
                         <SquareButton

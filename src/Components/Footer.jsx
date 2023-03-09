@@ -2,7 +2,7 @@ import { HomeRounded, HomeWorkRounded, PetsRounded, SosRounded } from '@mui/icon
 import { BottomNavigation, styled, BottomNavigationAction as MuiBottomNavigationAction, Paper, Box, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import { Theme, colors } from '../Theme';
+import { colors } from '../Theme';
 
 const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
   &.Mui-selected {
@@ -33,10 +33,10 @@ const Footer = () => {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction label="Home" icon={<HomeRounded />} sx={{ fontWeight: "600", minWidth: "70px" }} />
-          <BottomNavigationAction label="Rescues" icon={<PetsRounded />} sx={{ fontWeight: "600", minWidth: "70px" }} />
-          <BottomNavigationAction label="Emergency" icon={<SosRounded />} sx={{ fontWeight: "600", background: "#f1f1f1", minWidth: "70px" }} />
-          <BottomNavigationAction label="NGOs" icon={<HomeWorkRounded />} sx={{ fontWeight: "600", minWidth: "70px" }} />
+          <BottomNavigationAction label="Home" icon={<HomeRounded />} sx={{ fontWeight: "600" }} />
+          <BottomNavigationAction label="Rescues" icon={<PetsRounded />} sx={{ fontWeight: "600" }} />
+          <BottomNavigationAction label="Emergency" icon={<SosRounded />} sx={{ fontWeight: "600", background: "#f1f1f1"}} />
+          <BottomNavigationAction label="NGOs" icon={<HomeWorkRounded />} sx={{ fontWeight: "600" }} />
           <BottomNavigationAction label="Account" icon={<SosRounded />} />
         </BottomNavigation>
       </Paper>
