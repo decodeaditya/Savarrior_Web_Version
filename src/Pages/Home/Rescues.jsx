@@ -1,11 +1,12 @@
 import { Divider, Typography, Box, Grid } from '@mui/material'
 import React from 'react'
 import RescueCard from '../../Components/RescueCard'
-import { RescuesList } from '../../Data/Rescues'
 import { SquareButton, colors } from '../../Theme'
+import { Link } from 'react-router-dom'
+import { path } from '../../path'
 
 
-const Rescues = () => {
+const Rescues = ({RescuesList}) => {
     return (
         <Box sx={{ textAlign: "center", p: "5rem 2rem" }}>
             <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>Rescues Need Your Help</Typography>
@@ -14,11 +15,11 @@ const Rescues = () => {
             <Grid container sx={{justifyContent:"center",py:"2rem"}}>
                 {RescuesList.slice(0,3).map((rescue) => (
                     <Grid item>
-                        <RescueCard rescue={rescue} />
+                        <RescueCard rescue={rescue} key={rescue.id}/>
                     </Grid>
                 ))}
             </Grid>
-            <SquareButton variant="contained" sx={{mt:"1.2rem",p:"10px 15px",borderRadius:"4px"}}>Explore More Rescues</SquareButton>
+            <Link to={path.rescue} style={{textDecoration:"none"}}> <SquareButton variant="contained" sx={{mt:"1.2rem",p:"10px 15px",borderRadius:"4px"}}>Explore More Rescues</SquareButton></Link>
         </Box>
     )
 }

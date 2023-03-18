@@ -4,13 +4,13 @@ import Rescues from './Rescues'
 import Join from './Join'
 import Agencies from './Agencies'
 
-const HomePage = () => {
+const HomePage = ({RescuesList,AgencyList}) => {
   return (
     <>
     <HeroSection/>
-    <Rescues/>
+    <Rescues RescuesList={RescuesList}/>
     <Join/>
-    <Agencies/>
+    <Agencies ngos={AgencyList}/>
     </>
   )
 }

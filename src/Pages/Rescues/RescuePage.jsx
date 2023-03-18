@@ -2,9 +2,8 @@ import { Divider, Typography, Box, Grid } from '@mui/material'
 import React from 'react'
 import RescueCard from '../../Components/RescueCard'
 import { SquareButton, colors } from '../../Theme'
-import { RescuesList } from '../../Data/Rescues'
 
-const RescuePage = () => {
+const RescuePage = ({RescuesList}) => {
     return (
         <Box sx={{ textAlign: "center", p: "5rem 2rem",mt:"3rem" }}>
             <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>Explore Rescues</Typography>
@@ -13,7 +12,7 @@ const RescuePage = () => {
             <Grid container sx={{justifyContent:"center",py:"2rem"}}>
                 {RescuesList.map((rescue) => (
                     <Grid item>
-                        <RescueCard rescue={rescue} />
+                        <RescueCard rescue={rescue} key={rescue.id}/>
                     </Grid>
                 ))}
             </Grid>

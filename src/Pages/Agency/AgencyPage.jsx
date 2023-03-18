@@ -2,9 +2,8 @@ import { Divider, Typography, Box, Grid } from '@mui/material'
 import React from 'react'
 import AgencyCard from '../../Components/AgencyCard'
 import { SquareButton, colors } from '../../Theme'
-import { AgencyList } from '../../Data/Agency'
 
-const AgencyPage = () => {
+const AgencyPage = ({AgencyList}) => {
     return (
         <Box sx={{ textAlign: "center", p: "5rem 2rem",mt:"3rem" }}>
             <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>NGOs and People</Typography>
@@ -13,7 +12,7 @@ const AgencyPage = () => {
             <Grid container sx={{justifyContent:"center",py:"2rem"}}>
                 {AgencyList.map((agency) => (
                     <Grid item>
-                        <AgencyCard agency={agency} />
+                        <AgencyCard agency={agency} key={agency.id}/>
                     </Grid>
                 ))}
             </Grid>
