@@ -90,14 +90,14 @@ const Header = () => {
                     <Container maxWidth="xl">
                         <Toolbar disableGutters sx={{ color: "#5f5f5f", display: "flex", alignItems: "center" }}>
                             <Grid container justifyContent={'space-between'} alignItems={"center"}>
-                                <Grid item> <img src="https://assets-give.milaap.org/assets/milaap-logo-tiny-4d3dbc4e55c2aaec351f0f376329c624236c4d6266b910f472684e70603f600d.png" style={{ width: '110px' }} alt="Savarrior" /></Grid>
+                                <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '130px' }} alt="Savarrior" /></Grid>
                                 <Grid item sx={{ display: { md: 'flex', xs: "none" }, alignItems: "center" }}>
                                     {Links.map((l) => (
                                         <NavLink to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>
                                     ))}
                                 </Grid>
                                 <Grid item sx={{ display: 'flex' }}>
-                                    <Link to={report} style={{textDecoration:"none"}}>
+                                    <Link to={report} style={{ textDecoration: "none" }}>
                                         <Button variant="contained">Report A Rescue</Button>
                                     </Link>
                                     <IconButton sx={{ display: { md: "none", xs: "inline-flex" }, background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", }} onClick={handleSideBarClick}><MenuRounded /></IconButton>
@@ -154,11 +154,24 @@ const Header = () => {
                             Register
                         </MenuItem></Link>
                     </>}
-                {CurrentUser &&
+                {Guest &&
                     <>
                         <Box sx={{ p: "10px 13px" }}>
                             <Typography sx={{ fontWeight: "600" }}>Namaste, {CurrentUser?.displayName}</Typography>
-                            {Guest && <Typography sx={{ fontWeight: "600" }}>(Guest User)</Typography>}
+                            <Typography sx={{ fontWeight: "600" }}>(Guest User)</Typography>
+                        </Box>
+                        <Divider />
+                        <Link to="/login" style={{ textDecoration: "none", color: "black" }}><MenuItem onClick={handleProfileClose}>
+                            Login
+                        </MenuItem></Link>
+                        <Link to="/register" style={{ textDecoration: "none", color: "black" }}><MenuItem onClick={handleProfileClose}>
+                            Register
+                        </MenuItem></Link>
+                    </>}
+                {CurrentUser && !Guest &&
+                    <>
+                        <Box sx={{ p: "10px 13px" }}>
+                            <Typography sx={{ fontWeight: "600" }}>Namaste, {CurrentUser?.displayName}</Typography>
                         </Box>
                         <Divider /><MenuItem onClick={logout}>
                             Logout
@@ -193,7 +206,7 @@ const Header = () => {
                     ))}
                     {!CurrentUser &&
                         <>
-                            <Divider sx={{ borderTop: "2px solid #f2f2f2" }} />
+                        <Divider />
                             <NavLink to="/login" sx={{ marginLeft: 0, padding: 0 }}> <ListItem disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
@@ -213,6 +226,26 @@ const Header = () => {
                             </ListItem></NavLink>
                         </>
                     }
+                    {CurrentUser &&
+                        <>
+                        <Divider/> 
+                        <NavLink to="" sx={{ marginLeft: 0, padding: 0 }}> <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <PersonRounded />
+                                    </ListItemIcon>
+                                    <ListItemText primary="My Rescues" />
+                                </ListItemButton>
+                            </ListItem></NavLink>
+                        <ListItem disablePadding>
+                                <ListItemButton onClick={logout}>
+                                    <ListItemIcon>
+                                        <LoginRounded />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Logout" />
+                                </ListItemButton>
+                            </ListItem>
+                        </>}
                 </List>
             </Drawer>
 
