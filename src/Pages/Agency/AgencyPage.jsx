@@ -10,7 +10,7 @@ const AgencyPage = ({AgencyList}) => {
             <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Connect with Like Minded Groups and Friends</Typography>
             <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "1rem", background: colors.primary }} />
             <Grid container sx={{justifyContent:"center",py:"2rem"}}>
-                {AgencyList.map((agency) => (
+                {AgencyList?.map((agency) => (
                     <Grid item>
                         <AgencyCard agency={agency} key={agency.id}/>
                     </Grid>

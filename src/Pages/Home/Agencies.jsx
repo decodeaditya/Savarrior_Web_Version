@@ -12,7 +12,7 @@ const Agencies = ({ngos}) => {
             <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Help the Recent reported Rescues</Typography>
             <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "1rem", background: colors.primary }} />
             <Grid container sx={{ justifyContent: "center", py: "2rem" }}>
-                {ngos.slice(0, 3).map((ngo) => (
+                {ngos?.slice(0, 3).map((ngo) => (
                     <Grid item>
                         <AgencyCard agency={ngo} key={ngo.id} />
                     </Grid>

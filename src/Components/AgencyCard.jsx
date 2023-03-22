@@ -22,7 +22,7 @@ const AgencyCard = (props) => {
       <Box sx={{ p: '6px 14px' }}>
         <Typography sx={{ pb: "5px",fontWeight:"500",mb:"10px",color:colors.primary }} variant="h5" noWrap>{props.agency.name}</Typography>
         <Typography sx={{display:"flex",mt:"10px",alignItems:"center",fontSize:"18px"}}><MiscellaneousServices sx={{color:colors.primaryicons, borderRadius: "50%", p: "5px",mr:"7px", border: `2px solid ${colors.primary}` }} />        <Stack direction="row">
-            {props.agency.services.map((service)=>(
+            {props.agency.services?.map((service)=>(
                 <Chip label={service} sx={{mr:"4px"}} key={service} color="success" variant="outlined"/>
             ))}
         </Stack></Typography>

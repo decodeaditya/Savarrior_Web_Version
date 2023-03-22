@@ -13,7 +13,7 @@ const Rescues = ({RescuesList}) => {
             <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Help the Recent reported Rescues</Typography>
             <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "1rem", background: colors.primary }} />
             <Grid container sx={{justifyContent:"center",py:"2rem"}}>
-                {RescuesList.slice(0,3).map((rescue) => (
+                {RescuesList?.slice(0,3).map((rescue) => (
                     <Grid item>
                         <RescueCard rescue={rescue} key={rescue.id}/>
                     </Grid>

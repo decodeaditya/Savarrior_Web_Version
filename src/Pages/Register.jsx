@@ -84,9 +84,9 @@ export default function Register() {
                                     isNgo,
                                 }
 
-                                setDoc(doc(db, "registeredUsers", user.uid), userData)
-                                setDoc(doc(db, "registeredNGOs", user.uid), userData)
-                                updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) })
+                                {!isNgo&& setDoc(doc(db, "registeredUsers", user.uid), userData)}
+                                {isNgo&& setDoc(doc(db, "registeredNGOs", user.uid), userData)}
+                                {isNgo&& updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) })}
 
                             });
                         })
