@@ -90,7 +90,7 @@ const Header = () => {
                     <Container maxWidth="xl">
                         <Toolbar disableGutters sx={{ color: "#5f5f5f", display: "flex", alignItems: "center" }}>
                             <Grid container justifyContent={'space-between'} alignItems={"center"}>
-                                <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '130px' }} alt="Savarrior" /></Grid>
+                                <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '100px'}} alt="Savarrior" /></Grid>
                                 <Grid item sx={{ display: { md: 'flex', xs: "none" }, alignItems: "center" }}>
                                     {Links.map((l) => (
                                         <NavLink to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>

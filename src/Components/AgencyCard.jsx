@@ -26,7 +26,7 @@ const AgencyCard = (props) => {
                 <Chip label={service} sx={{mr:"4px"}} key={service} color="success" variant="outlined"/>
             ))}
         </Stack></Typography>
-        <Typography sx={{display:"flex",mt:"10px",alignItems:"center",fontSize:"18px"}}><LocationOnRounded sx={{color:colors.primaryicons, borderRadius: "50%", p: "5px",mr:"7px", border: `2px solid ${colors.primary}` }} />{props.agency.location}</Typography>
+        <Typography sx={{display:"flex",mt:"10px",alignItems:"center",fontSize:"18px"}} noWrap><LocationOnRounded sx={{color:colors.primaryicons, borderRadius: "50%", p: "5px",mr:"7px", border: `2px solid ${colors.primary}` }} />{props.agency.location}</Typography>
       </Box>
       <Grid container sx={{mt:"10px"}}>
         <Link style={{width:"100%",textDecoration:"none"}} to={`/ngo/${props.agency.slug}/${props.agency.id}`}><SquareButton variant="contained" sx={{width:"100%"}} >LEARN MORE</SquareButton></Link>

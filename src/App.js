@@ -16,26 +16,39 @@ import Report from "./Pages/Report";
 
 function App() {
 
+  const reqPermission = async () => {
+    const permission = await Notification.requestPermission()
+    if (permission === "granted") {
 
-    const [RescuesList, setRescues] = useState([])
-    const [NgosList,setNgo] = useState([])
+    } else if (permission === "denied") {
+      alert("Please Allow for Sending Notification")
+    }
+  }
 
-    useEffect(() => {
-        const rescues = onSnapshot(doc(db, "reportedRescues", "reportedRescues"), (doc) => {
-            doc.exists() && setRescues(doc.data().rescues)
-        })
-        return () => {
-            rescues()
-        }
-    }, [])
+  useEffect(() => {
+    reqPermission()
+  },[])
 
-    useEffect(() => {
-      const ngos = onSnapshot(doc(db, "ngos", "ngos"), (doc) => {
-          doc.exists() && setNgo(doc.data().ngoList)
-      })
-      return () => {
-          ngos()
-      }
+
+  const [RescuesList, setRescues] = useState([])
+  const [NgosList, setNgo] = useState([])
+
+  useEffect(() => {
+    const rescues = onSnapshot(doc(db, "reportedRescues", "reportedRescues"), (doc) => {
+      doc.exists() && setRescues(doc.data().rescues)
+    })
+    return () => {
+      rescues()
+    }
+  }, [])
+
+  useEffect(() => {
+    const ngos = onSnapshot(doc(db, "ngos", "ngos"), (doc) => {
+      doc.exists() && setNgo(doc.data().ngoList)
+    })
+    return () => {
+      ngos()
+    }
   }, [])
 
 
@@ -44,12 +57,12 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" index element={<HomePage RescuesList={RescuesList} AgencyList={NgosList}/>} />
-          <Route path="/rescues" index element={<RescuePage RescuesList={RescuesList}/>} />
-          <Route path="/ngos-and-people" index element={<AgencyPage AgencyList={NgosList}/>} />
+          <Route path="/" index element={<HomePage RescuesList={RescuesList} AgencyList={NgosList} />} />
+          <Route path="/rescues" index element={<RescuePage RescuesList={RescuesList} />} />
+          <Route path="/ngos-and-people" index element={<AgencyPage AgencyList={NgosList} />} />
           <Route path="/ngo/:slug/:id" index element={<SingleAgency />} />
           <Route path="/login" index element={<Login />} />
-          <Route path="/register" index element={<Register/>} />
+          <Route path="/register" index element={<Register />} />
           <Route path="/report-a-rescue" index element={<Report />} />
         </Routes>
         <div> <Footer /></div>
