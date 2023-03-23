@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, TextField, InputAdornment, IconButton,Divider } from '@mui/material';
+import { Grid, Typography, Box, TextField, InputAdornment, IconButton,Divider,Card } from '@mui/material';
 import React, { useContext } from 'react'
 import { SquareButton,colors } from '../Theme';
 import { signInAnonymously, updateProfile } from "firebase/auth";
@@ -8,8 +8,10 @@ import { auth, db, storage } from '../firebase';
 import { ShareLocationRounded } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid'
 import { AuthContext } from '../Context/AuthContext';
+import { locationOptions } from '../path';
+import { Helmet } from 'react-helmet';
 
-export default function Report() {
+export default function Report({url}) {
 
   const { CurrentUser } = useContext(AuthContext)
   const [countryCode, setCode] = React.useState("+91")
@@ -62,28 +64,37 @@ export default function Report() {
   }
 
   const getLocation = async () => {
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+
         setLatitude(position.coords.latitude)
         setLongitude(position.coords.longitude)
-        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=cd4204a0296b4fccabfbeaaa86f29d9e`).then(res => res.json()).then(res => setLocation(res.results[0].formatted))
+
+        // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=cd4204a0296b4fccabfbeaaa86f29d9e`).then(res => res.json()).then(res => setLocation(res.results[0].formatted))
+        fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, locationOptions)
+          .then(response => response.json())
+          .then(response => setLocation(response.results[0].address))
+          .catch(err => console.error(err));
       });
     } else {
       window.alert("Sorry, Your Browser is Not Comapatible for Auto Locating")
     }
   }
+
   return (
-    <Grid container component="main" sx={{ minHeight: '90vh', mt: "4rem", alignItems: "center", justifyContent: "center",background:"url(https://cdn.pixabay.com/photo/2017/09/03/22/16/rally-2712304_960_720.jpg)",backgroundSize:"cover" }}>
-        <Box
+    <Grid container component="main" sx={{ background:'#f1f1f1',minHeight: '90vh', mt: "4rem", alignItems: "center", justifyContent: "center" }}>
+        <Helmet><title>Report A Rescue | {url}</title></Helmet>
+        <Card
           sx={{
             my: 4,
             mx: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            background:"#ffffffd9",
-            p:"2rem 1.2rem",
+            p:{md:"2rem 1.2rem",xs:"1rem"},
             borderRadius:"5px",
+            width:{md:"40%",xs:"90%"}
           }}
         >
           <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem", textTransform: "uppercase" }}>Report A Rescue</Typography>
@@ -107,7 +118,7 @@ export default function Report() {
               Submit Details
             </SquareButton>
           </Box>
-        </Box>
+        </Card>
       </Grid>
   );
 }

@@ -5,6 +5,7 @@ import { SquareButton, colors } from '../Theme';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { Helmet } from 'react-helmet';
 
 
 export default function Login() {
@@ -60,6 +61,7 @@ export default function Login() {
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
+      <Helmet><title>Login | Savarrior</title></Helmet>
       <CssBaseline />
       <Grid
         item

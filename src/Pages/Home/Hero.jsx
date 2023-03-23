@@ -9,7 +9,7 @@ import { Close, ShareLocationRounded } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid'
 import { AuthContext } from '../../Context/AuthContext';
 import { Link } from 'react-router-dom';
-import { path } from '../../path';
+import { locationOptions, path } from '../../path';
 
 
 const Hero = styled(Box)((props) => ({
@@ -84,19 +84,11 @@ const HeroSection = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
 
-        const options = {
-          method: 'GET',
-          headers: {
-            'X-RapidAPI-Key': 'bf68858513msh08a1eb8727753afp19ae90jsn1918cef254fe',
-            'X-RapidAPI-Host': 'trueway-geocoding.p.rapidapi.com'
-          }
-        };
-
         setLatitude(position.coords.latitude)
         setLongitude(position.coords.longitude)
 
         // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=cd4204a0296b4fccabfbeaaa86f29d9e`).then(res => res.json()).then(res => setLocation(res.results[0].formatted))
-        fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, options)
+        fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, locationOptions)
           .then(response => response.json())
           .then(response => setLocation(response.results[0].address))
           .catch(err => console.error(err));

@@ -8,6 +8,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber, updateProfile } from 'firebas
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from '../firebase';
+import { Helmet } from 'react-helmet';
 
 export default function Register() {
 
@@ -120,6 +121,7 @@ export default function Register() {
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
+            <Helmet><title>Register | Savarrior</title></Helmet>
             <CssBaseline />
             <Grid
                 item
@@ -182,7 +184,7 @@ export default function Register() {
                             required
                             fullWidth
                             id="phone"
-                            label="Phone Number"
+                            label="Phone With Country Code (No Space) "
                             name="phone"
                             autoComplete="phone"
                             autoFocus

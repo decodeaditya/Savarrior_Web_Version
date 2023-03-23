@@ -5,13 +5,16 @@ import { useParams } from 'react-router-dom'
 import { colors, Button } from '../../Theme'
 import {db} from '../../firebase'
 import { doc, onSnapshot } from "firebase/firestore";
+import { Helmet } from 'react-helmet'
 
-const SingleAgency = () => {
+const SingleAgency = ({url}) => {
 
 
   const { id, slug } = useParams()
   const [ngo,setNgo] = useState({})
   const [success, setSuccess] = React.useState(false)
+
+  const ngoTitle = slug.charAt(0).toUpperCase()+slug.replace("-"," ").slice(1)
 
   useEffect(() => {
     const ngo = onSnapshot(doc(db, "registeredNGOs", id), (doc) => {
@@ -25,6 +28,7 @@ const SingleAgency = () => {
 
   return (
     <Grid container sx={{ marginTop: {md:"5rem",xs:"3rem"}, padding: "3rem 1rem", justifyContent: "center" }}>
+      <Helmet><title>{ngoTitle} | {url}</title></Helmet>
       <Grid item sx={{ width: { md: "50%", xs: "100%" } }}>
         <img src={ngo.ngoImage} width={'100%'} style={{ borderRadius: "6px",height:"100%",objectFit:"cover" }} />
       </Grid>

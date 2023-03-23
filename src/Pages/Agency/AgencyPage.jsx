@@ -1,11 +1,15 @@
 import { Divider, Typography, Box, Grid } from '@mui/material'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import AgencyCard from '../../Components/AgencyCard'
 import { SquareButton, colors } from '../../Theme'
 
-const AgencyPage = ({AgencyList}) => {
+const AgencyPage = ({AgencyList,url}) => {
     return (
         <Box sx={{ textAlign: "center", p: "5rem 2rem",mt:"3rem" }}>
+            <Helmet>
+                <title>NGOs and People | {url}</title>
+            </Helmet>
             <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>NGOs and People</Typography>
             <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Connect with Like Minded Groups and Friends</Typography>
             <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "1rem", background: colors.primary }} />

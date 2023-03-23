@@ -9,7 +9,6 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { path } from '../path'
 
-
 const NavLink = styled(Link)((props) => ({
     color: "#212121",
     fontSize: "16px",
@@ -90,13 +89,13 @@ const Header = () => {
                     <Container maxWidth="xl">
                         <Toolbar disableGutters sx={{ color: "#5f5f5f", display: "flex", alignItems: "center" }}>
                             <Grid container justifyContent={'space-between'} alignItems={"center"}>
-                                <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '100px'}} alt="Savarrior" /></Grid>
+                            <Link to={path.home}> <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '100px'}} alt="Savarrior" /></Grid></Link>
                                 <Grid item sx={{ display: { md: 'flex', xs: "none" }, alignItems: "center" }}>
                                     {Links.map((l) => (
                                         <NavLink to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>
                                     ))}
                                 </Grid>
-                                <Grid item sx={{ display: 'flex' }}>
+                                <Grid item sx={{ display: 'flex',alignItems:"center" }}>
                                     <Link to={report} style={{ textDecoration: "none" }}>
                                         <Button variant="contained">Report A Rescue</Button>
                                     </Link>
