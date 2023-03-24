@@ -9,11 +9,13 @@ import AgencyPage from "./Pages/Agency/AgencyPage";
 import SingleAgency from "./Pages/SingleAgency/SingleAgency";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { onSnapshot, doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db, messaging, vapidKey } from './firebase';
 import Report from "./Pages/Report";
 import { getToken } from "firebase/messaging";
+import axios from "axios";
+import { TokenContext } from './Context/TokenContext';
 
 function App() {
 
@@ -28,7 +30,6 @@ function App() {
       alert("Please Allow for Sending Notification")
     }
   }
-
 
   const [RescuesList, setRescues] = useState([])
   const [NgosList, setNgo] = useState([])
@@ -61,14 +62,15 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" index element={<HomePage RescuesList={RescuesList} AgencyList={NgosList} url={url} />} />
-          <Route path="/rescues" element={<RescuePage RescuesList={RescuesList} url={url} />} />
+          <Route path="/rescues" element={<RescuePage RescuesList={RescuesList} url={url} setRescues={setRescues}/>} />
           <Route path="/ngos-and-people" element={<AgencyPage AgencyList={NgosList} url={url} />} />
           <Route path="/ngo/:slug/:id" element={<SingleAgency url={url} />} />
+          <Route path="/rescue/:id" element={<RescuePage RescuesList={RescuesList} url={url} setRescues={setRescues}/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/report-a-rescue" element={<Report url={url} />} />
         </Routes>
-        <div> <button>SEnd Notification</button><Footer req={reqPermission} /></div>
+        <div><Footer req={reqPermission} /></div>
       </BrowserRouter>
     </ThemeProvider>
   );
