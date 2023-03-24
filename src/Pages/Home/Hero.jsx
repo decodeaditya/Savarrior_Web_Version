@@ -4,13 +4,14 @@ import { Button } from '../../Theme';
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, db, storage } from '../../firebase';
+import { auth, db, storage, serverKey } from '../../firebase';
 import { Close, ShareLocationRounded } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid'
 import { AuthContext } from '../../Context/AuthContext';
 import { Link } from 'react-router-dom';
 import { locationOptions, path } from '../../path';
-
+import axios from "axios";
+import { TokenContext } from '../../Context/TokenContext';
 
 const Hero = styled(Box)((props) => ({
   minHeight: "86vh",
@@ -24,6 +25,30 @@ const Hero = styled(Box)((props) => ({
 }));
 
 const HeroSection = () => {
+
+  const {registration_ids} = useContext(TokenContext)
+
+  const sendNoti = (data) => {
+
+    const config = {
+      method: 'post',
+      url: 'https://fcm.googleapis.com/fcm/send',
+      headers: {
+        Authorization:
+          `key=${serverKey}`,
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   const { CurrentUser } = useContext(AuthContext)
   const [countryCode, setCode] = React.useState("+91")
@@ -55,11 +80,11 @@ const HeroSection = () => {
         console.log(error)
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
 
           !CurrentUser && updateProfile(res.user, { displayName: name })
 
-          updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
+          await updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
             rescues: arrayUnion({
               id: uuidId,
               name: name,
@@ -69,8 +94,19 @@ const HeroSection = () => {
             })
           })
 
+          const data = JSON.stringify({
+            data: {},
+            notification: {
+              body: `Dear Animal Lover, ${name} has Located A Rescue at ${location}`,
+              title: `New Rescue Was Added By ${name}`,
+              image : downloadURL
+            },
+            registration_ids: registration_ids,
+          });
+      
 
           setSuccess(true)
+          sendNoti(data)
 
         });
       })
@@ -97,6 +133,7 @@ const HeroSection = () => {
       window.alert("Sorry, Your Browser is Not Comapatible for Auto Locating")
     }
   }
+
 
   return (
     <Hero>
@@ -125,13 +162,13 @@ const HeroSection = () => {
       </Grid>
       <Modal open={success} onClose={() => setSuccess(false)}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Card sx={{ position:"relative",width: { md: "50%", xs: '80%' }, height: { md: "50%", xs: "65%" }, borderRadius: "5px", p: "1rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <IconButton onClick={() => setSuccess(false)} sx={{position:"absolute",top:"10px",right:"10px"}}>
-          <Close />
-        </IconButton>
+        <Card sx={{ position: "relative", width: { md: "50%", xs: '80%' }, height: { md: "50%", xs: "65%" }, borderRadius: "5px", p: "1rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+          <IconButton onClick={() => setSuccess(false)} sx={{ position: "absolute", top: "10px", right: "10px" }}>
+            <Close />
+          </IconButton>
           <img src="https://img.freepik.com/premium-vector/friendly-female-volunteer-character-feeding-dog-animal-shelter-pound-young-african-american-woman-with-bowl_1016-13732.jpg" alt="" height="70%" />
           <Typography variant="h5" sx={{ fontWeight: "700", textAlign: "center", pt: "10px" }}>Congratulations! {username ? username : "Friend"}, Your Rescue Has Been Located</Typography>
-          <Link to={path.rescue} style={{textDecoration:"none"}}><Button variant="contained" sx={{mt:"14px"}}>Explore Rescues</Button></Link>
+          <Link to={path.rescue} style={{ textDecoration: "none" }}><Button variant="contained" sx={{ mt: "14px" }}>Explore Rescues</Button></Link>
         </Card>
       </Modal>
     </Hero>

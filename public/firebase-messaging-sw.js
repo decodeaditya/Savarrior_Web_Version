@@ -4,7 +4,11 @@ importScripts(
 );
 
 const firebaseConfig = {
-    messagingSenderId: "310461744278",
+  apiKey: "AIzaSyCJXQjkIiMSxVs2ASy5eV8k8tYfJtrrOVU",
+  projectId: "savarrior-web",
+  storageBucket: "savarrior-web.appspot.com",
+  messagingSenderId: "310461744278",
+  appId: "1:310461744278:web:8656e60ffca9633cc26eb7",
 };
 
 firebase.initializeApp(firebaseConfig);

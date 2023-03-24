@@ -3,15 +3,15 @@ import HomePage from "./Pages/Home/HomePage";
 import { ThemeProvider } from "@mui/material";
 import { Theme } from "./Theme";
 import Footer from "./Components/Footer";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RescuePage from "./Pages/Rescues/RescuePage";
 import AgencyPage from "./Pages/Agency/AgencyPage";
 import SingleAgency from "./Pages/SingleAgency/SingleAgency";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import { useEffect, useState } from 'react';
-import { onSnapshot, doc } from 'firebase/firestore';
-import { db, messaging } from './firebase';
+import { onSnapshot, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db, messaging, vapidKey } from './firebase';
 import Report from "./Pages/Report";
 import { getToken } from "firebase/messaging";
 
@@ -20,8 +20,10 @@ function App() {
   const reqPermission = async () => {
     const permission = await Notification.requestPermission()
     if (permission === "granted") {
-      const token = await getToken(messaging, { vapidKey: "BHccNxjDQqvqOOQ0t67mt0VFOBG-dHQkVJ8U0MMmOfijocmf9xOyECdRiNb49z8ylCadnBcl4bDjuLKZCFx6az4" })
-      console.log("Token Gen"+token)
+      const token = await getToken(messaging, { vapidKey: vapidKey })
+      await updateDoc(doc(db, "ngos", "phoneID"), {
+        tokens: arrayUnion(token)
+      })
     } else if (permission === "denied") {
       alert("Please Allow for Sending Notification")
     }
@@ -40,6 +42,7 @@ function App() {
     }
   }, [])
 
+
   useEffect(() => {
     const ngos = onSnapshot(doc(db, "ngos", "ngos"), (doc) => {
       doc.exists() && setNgo(doc.data().ngoList)
@@ -48,6 +51,7 @@ function App() {
       ngos()
     }
   }, [])
+
 
   const url = "Savarrior - Help Earthlings & Voiceless"
 
@@ -64,7 +68,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/report-a-rescue" element={<Report url={url} />} />
         </Routes>
-        <div> <Footer req={reqPermission} /></div>
+        <div> <button>SEnd Notification</button><Footer req={reqPermission} /></div>
       </BrowserRouter>
     </ThemeProvider>
   );

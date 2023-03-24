@@ -25,3 +25,5 @@ export const auth = getAuth();
 export const storage = getStorage();
 export const db = getFirestore()
 export const messaging = getMessaging(app)
+export const vapidKey = "BHccNxjDQqvqOOQ0t67mt0VFOBG-dHQkVJ8U0MMmOfijocmf9xOyECdRiNb49z8ylCadnBcl4bDjuLKZCFx6az4"
+export const serverKey = "AAAASEj2RJY:APA91bEyh7PDBiyf6J5wGpnSOJmtbNv9OI41KECNAmBUP8UquTElmtRZ8_WlqUuOfZ5EVulJJ0uhYh173lNW605upceaiAWQ4n3bfeMOfcfYgbJVAjkfT7ptNj-c7dhcBR7TYwBFcOmt"
