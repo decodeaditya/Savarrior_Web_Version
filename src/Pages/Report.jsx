@@ -12,8 +12,8 @@ import { locationOptions } from '../path';
 import { Helmet } from 'react-helmet';
 import { path } from '../path';
 import { Button } from '../Theme';
-import { TokenContext } from '../Context/TokenContext';
 import { Link } from 'react-router-dom';
+import { MessageContext } from '../Context/MessageContext';
 
 export default function Report({ url }) {
 
@@ -23,8 +23,9 @@ export default function Report({ url }) {
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
   const [success, setSuccess] = useState(false)
-  const { sendNoti } = useContext(TokenContext)
   const [username, setName] = useState(CurrentUser?.displayName)
+
+  const {sendMsg} = useContext(MessageContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,7 +39,7 @@ export default function Report({ url }) {
 
     const res = !CurrentUser ? await signInAnonymously(auth) : CurrentUser
 
-    const storageRef = ref(storage, name + uuidId);
+    const storageRef = ref(storage, uuidId);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on('state_changed',
@@ -47,29 +48,31 @@ export default function Report({ url }) {
         console.log(error)
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
 
           !CurrentUser && updateProfile(res.user, { displayName: name })
 
-          updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
+          const date = new Date().toLocaleDateString()
+
+          await updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
             rescues: arrayUnion({
               id: uuidId,
               name: name,
               location: [{ address: locate }, { coords: [{ latitude: latitude }, { longitude: longitude }] }],
               phone: PhoneNumber,
-              img: downloadURL
+              img: downloadURL,
+              userId:res.uid,
+              timestamp: date
             })
-
           })
-          const notification = {
-            body: `Dear Animal Lover, ${name} has Located A Rescue at ${location}`,
-            title: `New Rescue Was Added By ${name}`,
-            image: downloadURL
-          }
 
-          sendNoti(notification)
-
+          
           setSuccess(true)
+          sendMsg({
+            heading: `New Rescue Added by ${name}`,
+            img:downloadURL,
+            subtitle:`Dear Animal Lover, A New Rescue Has been Located at ${location}`
+          })
 
         });
       })

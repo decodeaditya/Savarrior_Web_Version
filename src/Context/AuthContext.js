@@ -8,14 +8,14 @@ export const AuthContextProvider = ({children})=>{
     const [CurrentUser,setCurrentUser] = useState({})
 
     useEffect(()=>{
-       const Authstate = onAuthStateChanged(auth,(user)=>{
-            setCurrentUser(user);
-        });
+        const AuthState = onAuthStateChanged(auth,(user)=>{
+            setCurrentUser(user)
+        })
 
-        return () =>{
-            Authstate()
+        return()=>{
+            AuthState()
         }
-    },[auth]);
+    },[])
 
 return(
     <AuthContext.Provider value={{CurrentUser}}>

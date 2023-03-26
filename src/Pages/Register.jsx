@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react';
 import { Avatar, CssBaseline, TextField, Paper, Box, Grid, Typography, Checkbox } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { SquareButton, colors } from '../Theme';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
-import { RecaptchaVerifier, signInWithPhoneNumber, updateProfile } from 'firebase/auth';
+import { linkWithCredential, PhoneAuthCredential, PhoneAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, updateCurrentUser, updateEmail, updatePassword, updateProfile } from 'firebase/auth';
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from '../firebase';
@@ -19,6 +19,7 @@ export default function Register() {
     const [location, setLocation] = useState("")
     const [services, setServices] = useState([])
     const Navigate = useNavigate()
+
 
 
     const setUp = () => {
@@ -39,6 +40,7 @@ export default function Register() {
         const profileImg = data.get('avatar')
         const ngoImage = data.get("ngoImage")
         const email = data.get("email")
+        const pass = data.get("password")
         const slug = name.replace(" ", "-").toLowerCase()
 
         setUp()
@@ -46,7 +48,7 @@ export default function Register() {
         const phoneNumber = phone;
         const appVerifier = window.recaptchaVerifier;
 
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        await signInWithPhoneNumber(auth, phoneNumber, appVerifier)
             .then((confirmationResult) => {
                 const code = prompt(`Enter Otp Sent to ${phone}`);
                 confirmationResult.confirm(code).then((result) => {
@@ -63,6 +65,8 @@ export default function Register() {
                             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 
                                 updateProfile(user, { displayName: name, email: email, photoURL: downloadURL })
+                                updateEmail(user, email)
+                                updatePassword(user, pass)
 
                                 const userData = isNgo ? {
                                     id: user.uid,
@@ -76,21 +80,37 @@ export default function Register() {
                                     services: services,
                                     slug: slug
                                 } :
-                                {
-                                    id: user.uid,
-                                    email: email,
-                                    name: name,
-                                    phone: phone,
-                                    img: downloadURL,
-                                    isNgo,
-                                }
+                                    {
+                                        id: user.uid,
+                                        email: email,
+                                        name: name,
+                                        phone: phone,
+                                        img: downloadURL,
+                                        isNgo,
+                                    }
 
-                                {!isNgo&& setDoc(doc(db, "registeredUsers", user.uid), userData)}
-                                {isNgo&& setDoc(doc(db, "registeredNGOs", user.uid), userData)}
-                                {isNgo&& updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) })}
+                                { !isNgo && setDoc(doc(db, "registeredUsers", user.uid), userData) }
+                                { isNgo && setDoc(doc(db, "registeredNGOs", user.uid), userData) }
+                                { isNgo && updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) }) }
+
+                                const credential = PhoneAuthCredential
+                                {
+                                    CurrentUser&& Guest&& 
+                                    linkWithCredential(auth.currentUser, credential)
+                                        .then((usercred) => {
+                                            const user = usercred.user;
+                                            console.log("Account linking success", user);
+                                        }).catch((error) => {
+                                            console.log("Account linking error", error);
+                                        });
+
+
+
+                                }
 
                             });
                         })
+
 
                     Navigate("/")
                 }).catch((error) => {
@@ -119,10 +139,13 @@ export default function Register() {
         }
     }
 
+    const Guest = CurrentUser?.isAnonymous
+
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
             <Helmet><title>Register | Savarrior</title></Helmet>
             <CssBaseline />
+            {!Guest && CurrentUser && Navigate("/")}
             <Grid
                 item
                 xs={false}
@@ -137,7 +160,7 @@ export default function Register() {
                     backgroundPosition: 'center',
                 }}
             >
-                <Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" width={"110px"} alt="Savarrior"/></Box>
+                <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" width={"110px"} alt="Savarrior" /></Box></Link>
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box
@@ -178,6 +201,16 @@ export default function Register() {
                             autoComplete="email"
                             autoFocus
                         />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            autoFocus
+                        />
                         <div id="recaptcha-container"></div>
                         <TextField
                             margin="normal"
@@ -214,7 +247,7 @@ export default function Register() {
                                     <Checkbox value="Foster" onChange={(e) => { handleChecked(e) }} />Foster
                                     <Checkbox value="Sterlization" onChange={(e) => { handleChecked(e) }} />Sterlization
                                 </Box>
-                                <TextField name="ngoImage" label="A Image Link" type="url" fullWidth/>
+                                <TextField name="ngoImage" label="A Image Link" type="url" fullWidth />
                             </>
                         }
                         <SquareButton
@@ -225,11 +258,11 @@ export default function Register() {
                         >
                             Register
                         </SquareButton>
-                        <Box sx={{mb:{xs:"4rem",md:0},display:'flex',justifyContent:"center"}}>
-                                Have an account?&nbsp;
-                                <Link to="/login" style={{ color: colors.primary }}>
-                                    Login
-                                </Link>
+                        <Box sx={{ mb: { xs: "4rem", md: 0 }, display: 'flex', justifyContent: "center" }}>
+                            Have an account?&nbsp;
+                            <Link to="/login" style={{ color: colors.primary }}>
+                                Login
+                            </Link>
                         </Box>
                     </Box>
                 </Box>

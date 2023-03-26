@@ -5,16 +5,16 @@ import Join from './Join'
 import Agencies from './Agencies'
 import { Helmet } from 'react-helmet'
 
-const HomePage = ({RescuesList,AgencyList,url}) => {
+const HomePage = ({ url }) => {
   return (
     <>
-    <Helmet>
-      <title>{url}</title>
-    </Helmet>
-    <HeroSection/>
-    <Rescues RescuesList={RescuesList}/>
-    <Join/>
-    <Agencies ngos={AgencyList}/>
+      <Helmet>
+        <title>{url}</title>
+      </Helmet>
+      <HeroSection />
+      <Rescues />
+      <Join />
+      <Agencies />
     </>
   )
 }

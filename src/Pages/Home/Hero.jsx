@@ -2,15 +2,15 @@ import { Grid, styled, Typography, Box, Stack, TextField, InputAdornment, IconBu
 import React, { useContext } from 'react'
 import { Button } from '../../Theme';
 import { signInAnonymously, updateProfile } from "firebase/auth";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore"
+import { arrayUnion, doc, serverTimestamp, updateDoc } from "firebase/firestore"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, db, storage, serverKey } from '../../firebase';
+import { auth, db, storage } from '../../firebase';
 import { Close, ShareLocationRounded } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid'
 import { AuthContext } from '../../Context/AuthContext';
 import { Link } from 'react-router-dom';
 import { locationOptions, path } from '../../path';
-import { TokenContext } from '../../Context/TokenContext';
+import { MessageContext } from '../../Context/MessageContext';
 
 const Hero = styled(Box)((props) => ({
   minHeight: "86vh",
@@ -24,7 +24,7 @@ const Hero = styled(Box)((props) => ({
 }));
 
 const HeroSection = () => {
-  const { sendNoti } = useContext(TokenContext)
+
 
   const { CurrentUser } = useContext(AuthContext)
   const [countryCode, setCode] = React.useState("+91")
@@ -33,7 +33,9 @@ const HeroSection = () => {
   const [longitude, setLongitude] = React.useState(null)
   const [success, setSuccess] = React.useState(false)
 
+
   const [username, setName] = React.useState(CurrentUser?.displayName)
+  const { sendMsg } = useContext(MessageContext)
 
   const handleSubmit = async (e) => {
 
@@ -48,7 +50,7 @@ const HeroSection = () => {
 
     const res = !CurrentUser ? await signInAnonymously(auth) : CurrentUser
 
-    const storageRef = ref(storage, name + uuidId);
+    const storageRef = ref(storage, uuidId);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on('state_changed',
@@ -61,31 +63,29 @@ const HeroSection = () => {
 
           !CurrentUser && updateProfile(res.user, { displayName: name })
 
+          const date = new Date().toLocaleDateString()
+
           await updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
             rescues: arrayUnion({
               id: uuidId,
               name: name,
               location: [{ address: locate }, { coords: [{ latitude: latitude }, { longitude: longitude }] }],
               phone: PhoneNumber,
-              img: downloadURL
+              img: downloadURL,
+              userId: res.uid,
+              timestamp: date
             })
           })
 
           setSuccess(true)
+          sendMsg({
+            heading: `New Rescue Added by ${name}`,
+            img: downloadURL,
+            subtitle: `Dear Animal Lover, A New Rescue Has been Located at ${location}`
+          })
 
         });
       })
-    setLatitude("")
-    setLongitude("")
-    setLocation("")
-  }
-
-  const send = ()=>{  
-    sendNoti(notification)
-  }
-  const notification = {
-    body: `Dear Animal Lover, Aditya has Located A Rescue at`,
-    title: `New Rescue Was Added By Aditya`,
   }
 
   const getLocation = async () => {
@@ -101,6 +101,8 @@ const HeroSection = () => {
           .then(response => response.json())
           .then(response => setLocation(response.results[0].address))
           .catch(err => console.error(err));
+
+        console.log(location)
       });
     } else {
       window.alert("Sorry, Your Browser is Not Comapatible for Auto Locating")
@@ -110,6 +112,7 @@ const HeroSection = () => {
 
   return (
     <Hero>
+
       <Grid container sx={{ maxWidth: { md: "89%", xs: "99%" }, justifyContent: "space-between", alignItems: "center" }}>
         <Grid item sx={{ width: { md: "50%", xs: "100%" }, p: "1rem", alignItems: "center", justifyContent: "center", my: { md: 0, xs: 8 } }}>
           <Typography variant="h3" sx={{ color: '#fff', fontWeight: "700", fontSize: { md: "50px", xs: "33px" } }}>Let's Help Each & Every Creature of God</Typography>

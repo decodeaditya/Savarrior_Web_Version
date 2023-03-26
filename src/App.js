@@ -9,49 +9,27 @@ import AgencyPage from "./Pages/Agency/AgencyPage";
 import SingleAgency from "./Pages/SingleAgency/SingleAgency";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import { useEffect, useState, useContext } from 'react';
-import { onSnapshot, doc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db, messaging, vapidKey } from './firebase';
+import { useEffect } from 'react';
 import Report from "./Pages/Report";
-import { getToken } from "firebase/messaging";
-import axios from "axios";
-import { TokenContext } from './Context/TokenContext';
+import OneSignal from "react-onesignal";
 
 function App() {
 
-  const reqPermission = async () => {
-    const permission = await Notification.requestPermission()
-    if (permission === "granted") {
-      const token = await getToken(messaging, { vapidKey: vapidKey })
-      await updateDoc(doc(db, "ngos", "phoneID"), {
-        tokens: arrayUnion(token)
-      })
-    } else if (permission === "denied") {
-      alert("Please Allow for Sending Notification")
-    }
-  }
+  // const reqPermission = async () => {
+  //   const permission = await Notification.requestPermission()
+  //   if (permission === "granted") {
 
-  const [RescuesList, setRescues] = useState([])
-  const [NgosList, setNgo] = useState([])
-
-  useEffect(() => {
-    const rescues = onSnapshot(doc(db, "reportedRescues", "reportedRescues"), (doc) => {
-      doc.exists() && setRescues(doc.data().rescues)
-    })
-    return () => {
-      rescues()
-    }
-  }, [])
+  //   } else if (permission === "denied") {
+  //     alert("Please Allow for Sending Notification")
+  //   }
+  // }
 
 
   useEffect(() => {
-    const ngos = onSnapshot(doc(db, "ngos", "ngos"), (doc) => {
-      doc.exists() && setNgo(doc.data().ngoList)
-    })
-    return () => {
-      ngos()
-    }
-  }, [])
+    OneSignal.init({ appId: 'bb8fb3ed-6c11-4dc4-b026-83d3d29e45ee', allowLocalhostAsSecureOrigin: true});
+    OneSignal.showSlidedownPrompt();
+  });
+
 
 
   const url = "Savarrior - Help Earthlings & Voiceless"
@@ -61,16 +39,15 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" index element={<HomePage RescuesList={RescuesList} AgencyList={NgosList} url={url} />} />
-          <Route path="/rescues" element={<RescuePage RescuesList={RescuesList} url={url} setRescues={setRescues}/>} />
-          <Route path="/ngos-and-people" element={<AgencyPage AgencyList={NgosList} url={url} />} />
+          <Route path="/" index element={<HomePage url={url} />} />
+          <Route path="/rescues" element={<RescuePage url={url} />} />
+          <Route path="/ngos-and-people" element={<AgencyPage url={url} />} />
           <Route path="/ngo/:slug/:id" element={<SingleAgency url={url} />} />
-          <Route path="/rescue/:id" element={<RescuePage RescuesList={RescuesList} url={url} setRescues={setRescues}/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/report-a-rescue" element={<Report url={url} />} />
         </Routes>
-        <div><Footer req={reqPermission} /></div>
+        <div><Footer /></div>
       </BrowserRouter>
     </ThemeProvider>
   );

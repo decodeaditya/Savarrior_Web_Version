@@ -44,8 +44,8 @@ const SingleAgency = ({ url }) => {
       </Grid>
       <Grid item sx={{ width: { md: "40%", xs: "100%" }, px: { md: "1rem", xs: "0" }, pl: { md: "2rem", xs: "0" }, mt: { md: 0, xs: "1rem" } }}>
         <Box sx={{ background: "#f1f1f1", p: "10px", borderRadius: "5px" }}>
-          <Typography variant="h4" sx={{ fontWeight: "700", textTransform: "uppercase" }}>{ngo.name}</Typography>
-          <Typography variant="h6" sx={{ display: "flex", alignItems: "center", fontWeight: "600" }}><LocationOnRounded sx={{ mr: "7px" }} />{ngo.location}</Typography>
+          <Typography variant="h4" sx={{ fontWeight: "700", textTransform: "uppercase",display:"flex",alignItems:"center" }}><Box component="img" width="32px" height="32px" sx={{objectFit:"contain",mr:"4px",borderRadius:"50%",border:`2px solid ${colors.primary}`}} src={ngo.img}/>{ngo.name}</Typography>
+          <Typography variant="h6" sx={{ display: "flex", alignItems: "flex-start", fontWeight: "600" }}><LocationOnRounded sx={{color:colors.primaryicons, mt:"4px",mr: "7px",width:"32px",mr:"4px",borderRadius:"50%" }} />{ngo.location}</Typography>
         </Box>
         <Typography variant="h6" sx={{ mt: "2rem", fontWeight: "700", textTransform: "uppercase" }}>How They Can Help You</Typography>
         <Divider sx={{ width: "80px", height: '4px', my: "1rem", background: colors.primary }} />
@@ -64,7 +64,7 @@ const SingleAgency = ({ url }) => {
           <IconButton onClick={() => setSuccess(false)} sx={{ position: "absolute", top: "10px", right: "10px" }}>
             <Close />
           </IconButton>
-          <img src="https://img.freepik.com/premium-vector/friendly-female-volunteer-character-feeding-dog-animal-shelter-pound-young-african-american-woman-with-bowl_1016-13732.jpg" alt="" height="200px" />
+          <img src="https://img.freepik.com/premium-vector/animal-rescue-pet-protection-hand-paw-as-symbol-support-love-pets-tiny-people-protect_501813-1519.jpg" alt="" height="200px" />
           <Typography variant="h6" sx={{ fontWeight: "600", textAlign: "center", pt: "10px" }}>Hi Dear, Animal Lover You Can Directly Contact {ngo.name} for Help. W'll make this Easy Soon.</Typography>
         </Card>
       </Modal>

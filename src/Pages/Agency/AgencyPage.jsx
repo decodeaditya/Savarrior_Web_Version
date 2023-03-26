@@ -1,25 +1,24 @@
 import { SearchOutlined } from '@mui/icons-material'
 import { Divider, Typography, Box, Grid, TextField, InputAdornment } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { Helmet } from 'react-helmet'
 import AgencyCard from '../../Components/AgencyCard'
+import { FirebaseContext } from '../../Context/FirebaseData'
 import { colors } from '../../Theme'
 
-const AgencyPage = ({ AgencyList, url }) => {
+const AgencyPage = ({ url }) => {
 
     const [query, setQuery] = useState("")
+    const {NgosList} = useContext(FirebaseContext)
 
     const search = (e) => {
         setQuery(e)
     }
 
-    const filteredData = AgencyList.filter((r) => {
-        //if no input the return the original
+    const filteredData = NgosList.filter((r) => {
         if (query.toLowerCase() === '') {
             return r;
         }
-        //return the item which contains the user input
-
         else {
             return `${r.name.toLowerCase()}${r.location.toLowerCase()}`.includes(query.toLowerCase())
         }

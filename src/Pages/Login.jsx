@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Paper, Box, Grid, Avatar, CssBaseline, TextField, Typography } from "@mui/material"
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { SquareButton, colors } from '../Theme';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { RecaptchaVerifier, signInWithEmailAndPassword, signInWithPhoneNumber } from 'firebase/auth';
 import { Helmet } from 'react-helmet';
+import { AuthContext } from '../Context/AuthContext';
 
 
 export default function Login() {
@@ -30,38 +31,62 @@ export default function Login() {
 
     const data = new FormData(e.currentTarget)
 
-    setUp()
+    if (method === "phone") {
+      setUp()
 
-    const phoneNumber = data.get("phone");
-    console.log(phoneNumber)
-    const appVerifier = window.recaptchaVerifier;
+      const phoneNumber = data.get("phone");
+      console.log(phoneNumber)
+      const appVerifier = window.recaptchaVerifier;
 
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        const code = prompt(`Enter Otp Sent to ${phoneNumber}`);
-        confirmationResult.confirm(code).then((result) => {
-          const user = result.user;
-          console.log(user)
-          Navigate("/")
+      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          const code = prompt(`Enter Otp Sent to ${phoneNumber}`);
+          confirmationResult.confirm(code).then((result) => {
+            const user = result.user;
+            console.log(user)
+            Navigate("/")
+          }).catch((error) => {
+            // User couldn't sign in (bad verification code?)
+            // ...
+            alert(error)
+          });
+          window.confirmationResult = confirmationResult;
         }).catch((error) => {
-          // User couldn't sign in (bad verification code?)
+          // Error; SMS not sent
           // ...
           alert(error)
         });
-        window.confirmationResult = confirmationResult;
-      }).catch((error) => {
-        // Error; SMS not sent
-        // ...
-        alert(error)
-      });
+    }
+    else {
+      const email = data.get("email")
+      const password = data.get("password")
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          Navigate("/")
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(error)
+        });
+    }
+
+
   }
 
 
   const [method, setMethod] = useState("email")
+  const { CurrentUser } = useContext(AuthContext)
+  const Guest = CurrentUser?.isAnonymous
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <Helmet><title>Login | Savarrior</title></Helmet>
+      {!Guest && CurrentUser && Navigate("/")}
       <CssBaseline />
       <Grid
         item
@@ -77,7 +102,7 @@ export default function Login() {
           backgroundPosition: 'center',
         }}
       >
-        <Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" width={"110px"} alt="Savarrior" /></Box>
+        <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" width={"110px"} alt="Savarrior" /></Box></Link>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box

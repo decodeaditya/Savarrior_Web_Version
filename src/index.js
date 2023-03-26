@@ -4,16 +4,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css'
 import { AuthContextProvider } from './Context/AuthContext';
-import { TokenContextProvider } from './Context/TokenContext';
+import { MessageContextProvider } from './Context/MessageContext';
+import { FirebaseContext, FirebaseContextProvider } from './Context/FirebaseData';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthContextProvider>
-    <TokenContextProvider>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </TokenContextProvider>
+      <AuthContextProvider>
+      <MessageContextProvider>
+        <FirebaseContextProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+        </FirebaseContextProvider>
+      </MessageContextProvider>
   </AuthContextProvider>
 );
 reportWebVitals();

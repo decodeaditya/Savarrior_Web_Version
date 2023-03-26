@@ -1,5 +1,5 @@
-import { Person2Rounded, LocationOnRounded } from '@mui/icons-material'
-import { Typography, Box, Grid, Modal } from '@mui/material'
+import { Person2Rounded, LocationOnRounded, Close } from '@mui/icons-material'
+import { Typography, Box, Grid, Modal, IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import { colors, SquareButton } from '../Theme'
 
@@ -41,7 +41,12 @@ const RescueCard = (props) => {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
 
-        <Box sx={{ width: { md: "70%", xs: '90%' }, height: { md: "70%", xs: "90%" }, borderRadius: "5px", }}> <iframe width="100%" title={props.rescue?.id} height="100%" position="relative" frameBorder="0" marginHeight="0" marginWidth="0" src={`https://maps.google.com/maps?q=${props.rescue?.location[1].coords[0].latitude},${props.rescue?.location[1].coords[1].longitude}&z=15&output=embed`}></iframe></Box>
+        <Box sx={{ position: "relative", width: { md: "70%", xs: '90%' }, height: { md: "70%", xs: "90%" }, borderRadius: "5px", }}>
+          <IconButton onClick={()=>setMapOpen(false)} sx={{ position: "absolute", top: "10px", right: "10px",zIndex:"999",background:colors.primary,"&:hover":{background:colors.primary} }}>
+            <Close sx={{color:"#fff"}}/>
+          </IconButton>
+          <Box sx={{ width: "100%", height: "100%", borderRadius: "5px", position: "relative" }} component="iframe" src={`https://maps.google.com/maps?q=${props.rescue?.location[1].coords[0].latitude},${props.rescue?.location[1].coords[1].longitude}&z=15&output=embed`} />
+        </Box>
       </Modal>
     </React.Fragment>
   )

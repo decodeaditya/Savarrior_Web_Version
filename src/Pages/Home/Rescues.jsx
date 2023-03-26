@@ -1,12 +1,14 @@
 import { Divider, Typography, Box, Grid } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import RescueCard from '../../Components/RescueCard'
 import { SquareButton, colors } from '../../Theme'
 import { Link } from 'react-router-dom'
 import { path } from '../../path'
+import { FirebaseContext } from '../../Context/FirebaseData'
 
 
-const Rescues = ({RescuesList}) => {
+const Rescues = () => {
+    const {RescuesList} = useContext(FirebaseContext)
     return (
         <Box sx={{ textAlign: "center", p: "5rem 2rem" }}>
             <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>Rescues Need Your Help</Typography>

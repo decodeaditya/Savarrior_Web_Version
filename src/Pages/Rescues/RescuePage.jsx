@@ -1,12 +1,15 @@
 import { Search, SearchOutlined } from '@mui/icons-material'
 import { Divider, Typography, Box, Grid, TextField, InputAdornment } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 import RescueCard from '../../Components/RescueCard'
+import { FirebaseContext } from '../../Context/FirebaseData'
 import { SquareButton, colors } from '../../Theme'
 
-const RescuePage = ({ RescuesList, url, setRescues }) => {
+const RescuePage = ({url}) => {
+
+    const {RescuesList} = useContext(FirebaseContext)
 
     const {id} = useParams()
     const [query, setQuery] = useState("")
