@@ -25,7 +25,7 @@ export default function Report({ url }) {
   const [success, setSuccess] = useState(false)
   const [username, setName] = useState(CurrentUser?.displayName)
 
-  const {sendMsg} = useContext(MessageContext)
+  const { sendMsg } = useContext(MessageContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -48,7 +48,7 @@ export default function Report({ url }) {
         console.log(error)
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
 
           !CurrentUser && updateProfile(res.user, { displayName: name })
 
@@ -61,17 +61,17 @@ export default function Report({ url }) {
               location: [{ address: locate }, { coords: [{ latitude: latitude }, { longitude: longitude }] }],
               phone: PhoneNumber,
               img: downloadURL,
-              userId:res.uid,
+              userId: res.uid,
               timestamp: date
             })
           })
 
-          
+
           setSuccess(true)
           sendMsg({
             heading: `New Rescue Added by ${name}`,
-            img:downloadURL,
-            subtitle:`Dear Animal Lover, A New Rescue Has been Located at ${location}`
+            img: downloadURL,
+            subtitle: `Dear Animal Lover, A New Rescue Has been Located at ${location}`
           })
 
         });
@@ -120,7 +120,7 @@ export default function Report({ url }) {
         <Box component="form" onSubmit={handleSubmit} sx={{ width: "96%" }}>
           <TextField label="Name" sx={{ my: 1 }} name="name" id="name" value={username} onChange={(e) => setName(e.target.value)} required fullWidth />
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <TextField sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} />
+            <TextField disabled sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} />
             <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required />
           </Box>
           <TextField fullWidth required label="Location" sx={{ my: 1 }} name="location" id="location" value={location} onChange={(e) => setLocation(e.target.value)} InputProps={{

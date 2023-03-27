@@ -24,7 +24,6 @@ function App() {
   //   }
   // }
 
-
   useEffect(() => {
     OneSignal.init({ appId: 'bb8fb3ed-6c11-4dc4-b026-83d3d29e45ee', allowLocalhostAsSecureOrigin: true});
     OneSignal.showSlidedownPrompt();

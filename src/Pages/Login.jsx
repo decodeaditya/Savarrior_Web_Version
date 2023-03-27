@@ -24,7 +24,9 @@ export default function Login() {
     }, auth);
   }
 
-
+  const [countryCode, setCode] = React.useState("+91")
+  const [phone, setPhone] = React.useState("")
+  const finalPhone = countryCode + phone
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -34,8 +36,7 @@ export default function Login() {
     if (method === "phone") {
       setUp()
 
-      const phoneNumber = data.get("phone");
-      console.log(phoneNumber)
+      const phoneNumber = finalPhone;
       const appVerifier = window.recaptchaVerifier;
 
       signInWithPhoneNumber(auth, phoneNumber, appVerifier)
@@ -69,9 +70,7 @@ export default function Login() {
           // ...
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(error)
+          alert(error.code.replace("-"," "))
         });
     }
 
@@ -94,7 +93,7 @@ export default function Login() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/11/13/21/46/sheep-1822137_960_720.jpg)',
+          backgroundImage: 'url(https://media.istockphoto.com/id/667055944/photo/portrait-of-a-black-goat-without-horns-farm-animal.jpg?s=170667a&w=0&k=20&c=NXUNlUntCxCta4KFWB4uBjE02Band8FkNAFuEwYxzkc=)',
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -145,18 +144,10 @@ export default function Login() {
                 />
               </>}
             {method === "phone" &&
-              <>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="phone"
-                  label="Enter Your Registered Phone Number"
-                  type="phone"
-                  id="phone"
-                  autoComplete="phone"
-                />
-              </>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <TextField sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} disabled />
+                <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)} />
+              </Box>
             }
             <SquareButton
               type="submit"

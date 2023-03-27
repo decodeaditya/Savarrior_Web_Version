@@ -1,5 +1,5 @@
 import { Grid, styled, Typography, Box, Stack, TextField, InputAdornment, IconButton, Modal, Card } from '@mui/material';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button } from '../../Theme';
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import { arrayUnion, doc, serverTimestamp, updateDoc } from "firebase/firestore"
@@ -35,7 +35,9 @@ const HeroSection = () => {
 
 
   const [username, setName] = React.useState(CurrentUser?.displayName)
+  const [phone,setPhone] = React.useState(CurrentUser?.phoneNumber?.slice(3))
   const { sendMsg } = useContext(MessageContext)
+
 
   const handleSubmit = async (e) => {
 
@@ -73,7 +75,7 @@ const HeroSection = () => {
               phone: PhoneNumber,
               img: downloadURL,
               userId: res.uid,
-              timestamp: date
+              timestamp:date
             })
           })
 
@@ -83,6 +85,7 @@ const HeroSection = () => {
             img: downloadURL,
             subtitle: `Dear Animal Lover, A New Rescue Has been Located at ${location}`
           })
+
 
         });
       })
@@ -125,8 +128,8 @@ const HeroSection = () => {
           <Stack>
             <TextField label="Name" sx={{ my: 1 }} name="name" id="name" value={username} onChange={(e) => setName(e.target.value)} required />
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <TextField sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} />
-              <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required />
+              <TextField disabled sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} />
+              <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)}/>
             </Box>
             <TextField required label="Location" sx={{ my: 1 }} name="location" id="location" value={location} onChange={(e) => setLocation(e.target.value)} InputProps={{
               endAdornment: <InputAdornment position="end"><IconButton onClick={getLocation}><ShareLocationRounded /></IconButton></InputAdornment>,

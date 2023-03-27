@@ -109,7 +109,7 @@ const Header = () => {
                                 <Link to={path.home}> <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '100px' }} alt="Savarrior" /></Grid></Link>
                                 <Grid item sx={{ display: { md: 'flex', xs: "none" }, alignItems: "center" }}>
                                     {Links.map((l) => (
-                                        <NavLink to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>
+                                        <NavLink key={l.path} to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>
                                     ))}
                                 </Grid>
                                 <Grid item sx={{ display: 'flex', alignItems: "center" }}>
@@ -174,7 +174,7 @@ const Header = () => {
                     <>
                         <Box sx={{ p: "10px 13px" }}>
                             <Typography sx={{ fontWeight: "600" }}>Namaste, {CurrentUser?.displayName}</Typography>
-                            <Typography sx={{ fontWeight: "600" }}>(Guest User)</Typography>
+                            <Typography sx={{ fontWeight: "600",fontSize:"14px",color:"gray" }}>(Guest User)</Typography>
                         </Box>
                         <Divider />
                         <Link to="/login" style={{ textDecoration: "none", color: "black" }}><MenuItem onClick={handleProfileClose}>
@@ -203,14 +203,15 @@ const Header = () => {
                 {CurrentUser &&
                     <Box container sx={{ justifyContent: "center", alignItems: "center", padding: "1rem", display: "flex", flexDirection: "column" }}>
                         <>
-                            <Avatar src={CurrentUser?.photoURL} sx={{ background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", width: 56, height: 56 }}><PersonOutlineSharp sx={{ color: colors.primary, fontSize: "26px" }} /></Avatar>
+                            <Avatar src={CurrentUser?.photoURL} sx={{ background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", width: 56, height: 56,mb:1 }}><PersonOutlineSharp sx={{ color: colors.primary, fontSize: "26px" }} /></Avatar>
                             <Typography sx={{ fontWeight: "600" }}>Namaste, {CurrentUser?.displayName}</Typography>
-                            <Divider sx={{ borderTop: "2px solid #f2f2f2" }} />
+                            {Guest&&<Typography sx={{ fontWeight: "600",fontSize:"14px",color:"gray" }}>(Guest User)</Typography>}
                         </>
+                            <Divider sx={{ borderTop: "2px solid #f2f2f2" }} />
                     </Box>}
                 <List sx={{ width: 250 }}>
                     {Links.map((l) => (
-                        <NavLink to={l.path} sx={{ marginLeft: 0, padding: 0 }}>
+                        <NavLink to={l.path} sx={{ marginLeft: 0, padding: 0 }} key={l.path}>
                             <ListItem key={l.name} disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
@@ -220,7 +221,7 @@ const Header = () => {
                                 </ListItemButton>
                             </ListItem></NavLink>
                     ))}
-                    {!CurrentUser &&
+                    {(!CurrentUser || Guest) &&
                         <>
                             <Divider />
                             <NavLink to="/login" sx={{ marginLeft: 0, padding: 0 }}> <ListItem disablePadding>
@@ -242,7 +243,7 @@ const Header = () => {
                             </ListItem></NavLink>
                         </>
                     }
-                    {CurrentUser &&
+                    {CurrentUser && !Guest&&
                         <>
                             <Divider />
                             <NavLink to="" sx={{ marginLeft: 0, padding: 0 }}> <ListItem disablePadding>
@@ -276,7 +277,7 @@ const Header = () => {
                             <Divider sx={{width:"100%"}}/>
                             {UserRescue.length === 0&& <Typography sx={{pt:"1rem"}}>You Have No Reported Rescues...</Typography>}
                             {UserRescue.map((r) => (
-                                <ListItem alignItems="center">
+                                <ListItem alignItems="center" key={r.id}>
                                     <ListItemAvatar>
                                         <Avatar alt={`Rescue By ${r.name}`} src={r.img} />
                                     </ListItemAvatar>
