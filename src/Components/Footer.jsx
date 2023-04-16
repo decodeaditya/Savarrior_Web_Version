@@ -4,7 +4,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { path as p } from '../path'
 import { Button } from '../Theme'
-
+import logo from './logo.png'
 
 const NavLink = styled(Link)((props) => ({
   color: "#212121",
@@ -66,14 +66,14 @@ const Footer = () => {
           <Grid item sx={{ ml: { md: "1rem", xs: "0", }, mt: { xs: "1rem", md: 0 } }}><a href='tel:+919044558703' style={{textDecoration:"none"}}><Button variant="contained">Talk to Us</Button></a></Grid>
         </Subscribe>
         <Grid container sx={{ background: "#ebebeb", p: {md:"2rem",xs:"2rem 1rem"}, color: "#fff", justifyContent: "center" }} direction="column">
-          <Grid item sx={{ textAlign: "center" }}><Link to="/"> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '120px' }} alt="Savarrior" /></Link></Grid>
-          <Grid item sx={{ display: "flex", justifyContent: "center",flexWrap:"wrap",my:"10px" }}>
+          <Grid item sx={{ textAlign: "center" }}><Link to="/"> <img src={logo} style={{ width: '150px' }} alt="Savarrior" /></Link></Grid>
+          {/* <Grid item sx={{ display: "flex", justifyContent: "center",flexWrap:"wrap",my:"10px" }}>
             <NavLink to="/" ><Typography sx={{fontWeight:"600"}}>Home</Typography></NavLink>
             <NavLink to="/"><Typography sx={{fontWeight:"600"}}>About Us</Typography></NavLink>
             <NavLink to="/"><Typography sx={{fontWeight:"600"}}>Contact Us</Typography></NavLink>
             <NavLink to="/"><Typography sx={{fontWeight:"600"}}>Rescues</Typography></NavLink>
             <NavLink to="/"><Typography sx={{fontWeight:"600"}}>NGOs</Typography></NavLink>
-          </Grid>
+          </Grid> */}
         </Grid>
           <Box sx={{textAlign:"center",py:"10px",background:"#d1d1d1"}}><Typography sx={{color:"#000"}}>Copyright {new Date().getFullYear()} Savarrior</Typography></Box>
       </Box>

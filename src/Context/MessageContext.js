@@ -3,12 +3,16 @@ import { createContext, useState, useEffect } from "react";
 export const MessageContext = createContext()
 
 export const MessageContextProvider = ({ children }) => {
+
+
     const sendMsg = (msg) => {
+        
+        
         const options = {
             method: 'POST',
             headers: {
                 accept: 'application/json',
-                Authorization: 'Basic NTM1NzRmZjctNmU3Yy00OWUyLTkwNTMtMzA1YzczZjg3Njlm',
+                Authorization: `Basic NTM1NzRmZjctNmU3Yy00OWUyLTkwNTMtMzA1YzczZjg3Njlm`,
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
@@ -28,8 +32,6 @@ export const MessageContextProvider = ({ children }) => {
 
         fetch('https://onesignal.com/api/v1/notifications', options)
             .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
     }
 
     return (

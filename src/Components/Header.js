@@ -1,8 +1,8 @@
-import { AppBar, Card, Box, Toolbar, Typography, Grid, styled, ListItemIcon, Avatar, Menu, MenuItem, ListItem, ListItemText, Drawer, List, ListItemButton, Divider, IconButton, Modal, ListItemAvatar } from '@mui/material'
+import { AppBar, Card, Box, Toolbar, Typography, Grid, styled, ListItemIcon, Avatar, Menu, MenuItem, ListItem, ListItemText, Drawer, List, ListItemButton, Divider, IconButton, Modal, ListItemAvatar, Badge } from '@mui/material'
 import { Button, colors } from '../Theme'
 import { Container } from '@mui/system'
 import React, { useContext, useState } from 'react'
-import { Close, DeleteRounded, HomeRounded, HomeWorkRounded, LoginRounded, MenuRounded, PersonOutlineSharp, PersonRounded, PetsRounded } from '@mui/icons-material'
+import { CircleNotificationsRounded, Close, DeleteRounded, HomeRounded, HomeWorkRounded, LoginRounded, MenuRounded, PersonOutlineSharp, PersonRounded, PetsRounded } from '@mui/icons-material'
 import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext'
 import { signOut } from 'firebase/auth'
@@ -11,6 +11,7 @@ import { path } from '../path'
 import { FirebaseContext } from '../Context/FirebaseData'
 import { arrayRemove, doc, updateDoc } from 'firebase/firestore'
 import { deleteObject, ref } from 'firebase/storage'
+import logo from './logo.png'
 
 const NavLink = styled(Link)((props) => ({
     color: "#212121",
@@ -55,6 +56,7 @@ const Header = () => {
     const Profileopen = Boolean(ProfileanchorEl);
 
     const [rescueBox, setRescueBox] = useState(false)
+    const [notificationTab,setNotificationTab] = useState(false)
 
     const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
         setProfileAnchorEl(event.currentTarget);
@@ -87,16 +89,16 @@ const Header = () => {
         handleProfileClose()
     }
 
-    const {RescuesList} = useContext(FirebaseContext)
-    const UserRescue = RescuesList.filter((r)=>{
+    const { RescuesList } = useContext(FirebaseContext)
+    const UserRescue = RescuesList.filter((r) => {
         return CurrentUser?.uid === r.userId
     })
 
-    const handleDelete = async(r)=>{
+    const handleDelete = async (r) => {
         await updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
             rescues: arrayRemove(r)
-          })
-        await deleteObject(ref(storage, r.id)); 
+        })
+        await deleteObject(ref(storage, r.id));
     }
 
     return (
@@ -106,7 +108,7 @@ const Header = () => {
                     <Container maxWidth="xl">
                         <Toolbar disableGutters sx={{ color: "#5f5f5f", display: "flex", alignItems: "center" }}>
                             <Grid container justifyContent={'space-between'} alignItems={"center"}>
-                                <Link to={path.home}> <Grid item> <img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" style={{ width: '100px' }} alt="Savarrior" /></Grid></Link>
+                                <Link to={path.home}> <Grid item> <img src={logo} style={{ width: '150px' }} alt="Savarrior" /></Grid></Link>
                                 <Grid item sx={{ display: { md: 'flex', xs: "none" }, alignItems: "center" }}>
                                     {Links.map((l) => (
                                         <NavLink key={l.path} to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>
@@ -116,6 +118,10 @@ const Header = () => {
                                     <Link to={report} style={{ textDecoration: "none" }}>
                                         <Button variant="contained">Report A Rescue</Button>
                                     </Link>
+                                    {/* <Badge color="secondary" badgeContent={100} max={99} sx={{mx:"7px",cursor:"pointer"}} onClick={()=>setNotificationTab(true)}
+                                    >
+                                        <CircleNotificationsRounded sx={{ background: "#fff", fontSize: "45px", color: colors.primary }} />
+                                    </Badge> */}
                                     <IconButton sx={{ display: { md: "none", xs: "inline-flex" }, background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", }} onClick={handleSideBarClick}><MenuRounded /></IconButton>
                                     <Avatar src={CurrentUser?.photoURL} sx={{ display: { xs: "none", md: "inline-flex" }, background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", }} onClick={handleProfileClick}><PersonOutlineSharp sx={{ color: colors.primary, fontSize: "26px" }} /></Avatar>
                                 </Grid>
@@ -174,7 +180,7 @@ const Header = () => {
                     <>
                         <Box sx={{ p: "10px 13px" }}>
                             <Typography sx={{ fontWeight: "600" }}>Namaste, {CurrentUser?.displayName}</Typography>
-                            <Typography sx={{ fontWeight: "600",fontSize:"14px",color:"gray" }}>(Guest User)</Typography>
+                            <Typography sx={{ fontWeight: "600", fontSize: "14px", color: "gray" }}>(Guest User)</Typography>
                         </Box>
                         <Divider />
                         <Link to="/login" style={{ textDecoration: "none", color: "black" }}><MenuItem onClick={handleProfileClose}>
@@ -203,11 +209,11 @@ const Header = () => {
                 {CurrentUser &&
                     <Box container sx={{ justifyContent: "center", alignItems: "center", padding: "1rem", display: "flex", flexDirection: "column" }}>
                         <>
-                            <Avatar src={CurrentUser?.photoURL} sx={{ background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", width: 56, height: 56,mb:1 }}><PersonOutlineSharp sx={{ color: colors.primary, fontSize: "26px" }} /></Avatar>
+                            <Avatar src={CurrentUser?.photoURL} sx={{ background: "#fff", border: `2px solid ${colors.primary}`, marginLeft: "7px", width: 56, height: 56, mb: 1 }}><PersonOutlineSharp sx={{ color: colors.primary, fontSize: "26px" }} /></Avatar>
                             <Typography sx={{ fontWeight: "600" }}>Namaste, {CurrentUser?.displayName}</Typography>
-                            {Guest&&<Typography sx={{ fontWeight: "600",fontSize:"14px",color:"gray" }}>(Guest User)</Typography>}
+                            {Guest && <Typography sx={{ fontWeight: "600", fontSize: "14px", color: "gray" }}>(Guest User)</Typography>}
                         </>
-                            <Divider sx={{ borderTop: "2px solid #f2f2f2" }} />
+                        <Divider sx={{ borderTop: "2px solid #f2f2f2" }} />
                     </Box>}
                 <List sx={{ width: 250 }}>
                     {Links.map((l) => (
@@ -243,7 +249,7 @@ const Header = () => {
                             </ListItem></NavLink>
                         </>
                     }
-                    {CurrentUser && !Guest&&
+                    {CurrentUser && !Guest &&
                         <>
                             <Divider />
                             <NavLink to="" sx={{ marginLeft: 0, padding: 0 }}> <ListItem disablePadding>
@@ -265,6 +271,8 @@ const Header = () => {
                         </>}
                 </List>
             </Drawer>
+
+
             <Modal open={rescueBox}
                 sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Card sx={{ position: "relative", width: { md: "50%", xs: '80%' }, minHeight: { md: "50%", xs: "65%" }, borderRadius: "5px", p: "1rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "start" }}>
@@ -272,10 +280,10 @@ const Header = () => {
                         <Close />
                     </IconButton>
                     <Box>
-                        <Typography variant="h5" sx={{ fontWeight: "700",textAlign:"center",textTransform:"uppercase" }}>Rescues by You</Typography>
+                        <Typography variant="h5" sx={{ fontWeight: "700", textAlign: "center", textTransform: "uppercase" }}>Rescues by You</Typography>
                         <List sx={{ width: '100%', maxWidth: "100%", bgcolor: 'background.paper' }}>
-                            <Divider sx={{width:"100%"}}/>
-                            {UserRescue.length === 0&& <Typography sx={{pt:"1rem"}}>You Have No Reported Rescues...</Typography>}
+                            <Divider sx={{ width: "100%" }} />
+                            {UserRescue.length === 0 && <Typography sx={{ pt: "1rem" }}>You Have No Reported Rescues...</Typography>}
                             {UserRescue.map((r) => (
                                 <ListItem alignItems="center" key={r.id}>
                                     <ListItemAvatar>
@@ -294,14 +302,53 @@ const Header = () => {
                                                 </Typography>
                                             </React.Fragment>
                                         }
-                                        />
-                                       <IconButton onClick={()=>handleDelete(r)}><DeleteRounded/></IconButton>
+                                    />
+                                    <IconButton onClick={() => handleDelete(r)}><DeleteRounded /></IconButton>
                                 </ListItem>))}
 
                         </List>
                     </Box>
                 </Card>
             </Modal>
+
+            <Modal open={notificationTab}
+                sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Card sx={{ position: "relative", width: { md: "50%", xs: '80%' }, minHeight: { md: "50%", xs: "65%" }, borderRadius: "5px", p: "1rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "start" }}>
+                    <IconButton sx={{ position: "absolute", top: "10px", right: "10px" }} onClick={() => setNotificationTab(false)}>
+                        <Close />
+                    </IconButton>
+                    <Box>
+                        <Typography variant="h5" sx={{ fontWeight: "700", textAlign: "center", textTransform: "uppercase" }}>notifications</Typography>
+                        <List sx={{ width: '100%', maxWidth: "100%", bgcolor: 'background.paper' }}>
+                            <Divider sx={{ width: "100%" }} />
+                            {UserRescue.length === 0 && <Typography sx={{ pt: "1rem" }}>No Notifications Here!</Typography>}
+                            {UserRescue.map((r) => (
+                                <ListItem alignItems="center" key={r.id}>
+                                    <ListItemAvatar>
+                                        <Avatar alt={`Rescue By ${r.name}`} src={r.img} />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={r.timestamp}
+                                        secondary={
+                                            <React.Fragment>
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    {r.location[0].address}
+                                                </Typography>
+                                            </React.Fragment>
+                                        }
+                                    />
+                                    <IconButton onClick={() => handleDelete(r)}><DeleteRounded /></IconButton>
+                                </ListItem>))}
+
+                        </List>
+                    </Box>
+                </Card>
+            </Modal>
+
         </React.Fragment>
     )
 }

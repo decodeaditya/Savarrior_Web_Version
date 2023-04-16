@@ -9,6 +9,7 @@ import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from '../firebase';
 import { Helmet } from 'react-helmet';
+import logo from '../Components/logo.png'
 
 export default function Register() {
 
@@ -88,7 +89,7 @@ export default function Register() {
                                                     location: location,
                                                     ngoImage: ngoImage,
                                                     services: services,
-                                                    slug: slug
+                                                    slug: slug,
                                                 } :
                                                     {
                                                         id: user.uid,
@@ -210,7 +211,7 @@ export default function Register() {
                     backgroundPosition: 'center',
                 }}
             >
-                <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" width={"110px"} alt="Savarrior" /></Box></Link>
+                <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src={logo}width={"120px"} alt="Savarrior" /></Box></Link>
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box

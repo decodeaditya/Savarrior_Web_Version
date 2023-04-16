@@ -1,5 +1,5 @@
 import { Grid, styled, Typography, Box, Stack, TextField, InputAdornment, IconButton, Modal, Card } from '@mui/material';
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button } from '../../Theme';
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import { arrayUnion, doc, serverTimestamp, updateDoc } from "firebase/firestore"
@@ -28,14 +28,14 @@ const HeroSection = () => {
 
   const { CurrentUser } = useContext(AuthContext)
   const [countryCode, setCode] = React.useState("+91")
-  const [location, setLocation] = React.useState(null)
-  const [latitude, setLatitude] = React.useState(null)
-  const [longitude, setLongitude] = React.useState(null)
+  const [location, setLocation] = React.useState("")
+  const [latitude, setLatitude] = React.useState("")
+  const [longitude, setLongitude] = React.useState("")
   const [success, setSuccess] = React.useState(false)
 
 
   const [username, setName] = React.useState(CurrentUser?.displayName)
-  const [phone,setPhone] = React.useState(CurrentUser?.phoneNumber?.slice(3))
+  const [phone, setPhone] = React.useState(CurrentUser?.phoneNumber?.slice(3))
   const { sendMsg } = useContext(MessageContext)
 
 
@@ -52,7 +52,7 @@ const HeroSection = () => {
 
     const res = !CurrentUser ? await signInAnonymously(auth) : CurrentUser
 
-    const storageRef = ref(storage, uuidId);
+    const storageRef = ref(storage, name + uuidId);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on('state_changed',
@@ -75,7 +75,7 @@ const HeroSection = () => {
               phone: PhoneNumber,
               img: downloadURL,
               userId: res.uid,
-              timestamp:date
+              timestamp: date
             })
           })
 
@@ -91,26 +91,37 @@ const HeroSection = () => {
       })
   }
 
-  const getLocation = async () => {
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-
-        setLatitude(position.coords.latitude)
-        setLongitude(position.coords.longitude)
-
-        // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=cd4204a0296b4fccabfbeaaa86f29d9e`).then(res => res.json()).then(res => setLocation(res.results[0].formatted))
-        fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, locationOptions)
-          .then(response => response.json())
-          .then(response => setLocation(response.results[0].address))
-          .catch(err => console.error(err));
-
-        console.log(location)
-      });
-    } else {
-      window.alert("Sorry, Your Browser is Not Comapatible for Auto Locating")
-    }
+  const fetchAddress = async (latitude, longitude) => {
+    const response = await fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, locationOptions)
+    const locate = await response.json()
+    return locate
   }
+
+  const [getLocation,setGetLocation] = useState(false)
+
+  useEffect(() => {
+    const getLocation = () => {
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+
+          setLatitude(position.coords.latitude)
+          setLongitude(position.coords.longitude)
+
+          await fetchAddress(latitude, longitude).then(res => {
+            setLocation(res.results[0].address)
+          })
+
+          setGetLocation(false)
+
+        });
+      } else {
+        window.alert("Sorry, Your Browser is Not Compatible for Auto Locating")
+      }
+    }
+
+    return getLocation()
+  },[getLocation])
 
 
   return (
@@ -129,10 +140,10 @@ const HeroSection = () => {
             <TextField label="Name" sx={{ my: 1 }} name="name" id="name" value={username} onChange={(e) => setName(e.target.value)} required />
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <TextField disabled sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} />
-              <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)}/>
+              <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)} />
             </Box>
             <TextField required label="Location" sx={{ my: 1 }} name="location" id="location" value={location} onChange={(e) => setLocation(e.target.value)} InputProps={{
-              endAdornment: <InputAdornment position="end"><IconButton onClick={getLocation}><ShareLocationRounded /></IconButton></InputAdornment>,
+              endAdornment: <InputAdornment position="end"><IconButton onClick={()=>setGetLocation(true)}><ShareLocationRounded /></IconButton></InputAdornment>,
             }} />
             <Box sx={{ display: "flex", alignItems: "center", my: "8px", p: "12px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}><Typography >Animal's Image :&nbsp; </Typography> <input type="file" id="animal" accept='image/*' name="img" required /></Box>
           </Stack>

@@ -7,6 +7,7 @@ import { auth } from '../firebase';
 import { RecaptchaVerifier, signInWithEmailAndPassword, signInWithPhoneNumber } from 'firebase/auth';
 import { Helmet } from 'react-helmet';
 import { AuthContext } from '../Context/AuthContext';
+import logo from '../Components/logo.png'
 
 
 export default function Login() {
@@ -101,7 +102,7 @@ export default function Login() {
           backgroundPosition: 'center',
         }}
       >
-        <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src="https://d2aq6dqxahe4ka.cloudfront.net/themes/front/page/images/icons/impactguru.png" width={"110px"} alt="Savarrior" /></Box></Link>
+        <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src={logo} width={"110px"} alt="Savarrior" /></Box></Link>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box

@@ -1,5 +1,5 @@
 import { Grid, Typography, Box, TextField, InputAdornment, IconButton, Divider, Card, Modal } from '@mui/material';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import { SquareButton, colors } from '../Theme';
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore"
@@ -81,24 +81,38 @@ export default function Report({ url }) {
     setLocation("")
   }
 
-  const getLocation = async () => {
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-
-        setLatitude(position.coords.latitude)
-        setLongitude(position.coords.longitude)
-
-        // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=cd4204a0296b4fccabfbeaaa86f29d9e`).then(res => res.json()).then(res => setLocation(res.results[0].formatted))
-        fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, locationOptions)
-          .then(response => response.json())
-          .then(response => setLocation(response.results[0].address))
-          .catch(err => console.error(err));
-      });
-    } else {
-      window.alert("Sorry, Your Browser is Not Comapatible for Auto Locating")
-    }
+  const fetchAddress = async (latitude, longitude) => {
+    const response = await fetch(`https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%2C${longitude}&language=en`, locationOptions)
+    const locate = await response.json()
+    return locate
   }
+
+  const [getLocation,setGetLocation] = useState(false)
+
+  useEffect(() => {
+    const getLocation = () => {
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+
+          setLatitude(position.coords.latitude)
+          setLongitude(position.coords.longitude)
+
+          await fetchAddress(latitude, longitude).then(res => {
+            setLocation(res.results[0].address)
+          })
+
+          setGetLocation(false)
+
+        });
+      } else {
+        window.alert("Sorry, Your Browser is Not Compatible for Auto Locating")
+      }
+    }
+
+    return getLocation()
+  },[getLocation])
+
 
   return (
     <Grid container component="main" sx={{ background: '#f1f1f1', minHeight: '90vh', mt: "4rem", alignItems: "center", justifyContent: "center" }}>
@@ -124,7 +138,7 @@ export default function Report({ url }) {
             <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required />
           </Box>
           <TextField fullWidth required label="Location" sx={{ my: 1 }} name="location" id="location" value={location} onChange={(e) => setLocation(e.target.value)} InputProps={{
-            endAdornment: <InputAdornment position="end"><IconButton onClick={getLocation}><ShareLocationRounded /></IconButton></InputAdornment>,
+            endAdornment: <InputAdornment position="end"><IconButton onClick={()=>setGetLocation(true)}><ShareLocationRounded /></IconButton></InputAdornment>,
           }} />
           <Box sx={{ display: "flex", alignItems: "center", my: "8px", p: "12px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}><Typography >Animal's Image :&nbsp; </Typography> <input type="file" id="animal" accept='image/*' name="img" required /></Box>
           <SquareButton
