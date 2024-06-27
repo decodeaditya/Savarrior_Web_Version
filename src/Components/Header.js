@@ -9,7 +9,7 @@ import { signOut } from 'firebase/auth'
 import { auth, db, storage } from '../firebase'
 import { path } from '../path'
 import { FirebaseContext } from '../Context/FirebaseData'
-import { arrayRemove, doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { deleteObject, ref } from 'firebase/storage'
 import logo from './logo.png'
 
@@ -91,14 +91,12 @@ const Header = () => {
 
     const { RescuesList } = useContext(FirebaseContext)
     const UserRescue = RescuesList.filter((r) => {
-        return CurrentUser?.uid === r.userId
+        return r.id.includes(CurrentUser?.uid)
     })
 
     const handleDelete = async (r) => {
-        await updateDoc(doc(db, "reportedRescues", "reportedRescues"), {
-            rescues: arrayRemove(r)
-        })
         await deleteObject(ref(storage, r.id));
+        await deleteDoc(doc(db, "rescues", r.id));
     }
 
     return (
@@ -108,7 +106,7 @@ const Header = () => {
                     <Container maxWidth="xl">
                         <Toolbar disableGutters sx={{ color: "#5f5f5f", display: "flex", alignItems: "center" }}>
                             <Grid container justifyContent={'space-between'} alignItems={"center"}>
-                                <Link to={path.home}> <Grid item> <img src={logo} style={{ width: '150px' }} alt="Savarrior" /></Grid></Link>
+                                <Link to="/"> <Grid item> <img src={logo} style={{ width: '115px' }} alt="Savarrior" /></Grid></Link>
                                 <Grid item sx={{ display: { md: 'flex', xs: "none" }, alignItems: "center" }}>
                                     {Links.map((l) => (
                                         <NavLink key={l.path} to={l.path} sx={{ color: slug === l.path ? colors.primary : '#212121' }}><Typography variant="body1">{l.name}</Typography></NavLink>
@@ -116,7 +114,7 @@ const Header = () => {
                                 </Grid>
                                 <Grid item sx={{ display: 'flex', alignItems: "center" }}>
                                     <Link to={report} style={{ textDecoration: "none" }}>
-                                        <Button variant="contained">Report A Rescue</Button>
+                                        <Button variant="contained">Download App</Button>
                                     </Link>
                                     {/* <Badge color="secondary" badgeContent={100} max={99} sx={{mx:"7px",cursor:"pointer"}} onClick={()=>setNotificationTab(true)}
                                     >
@@ -280,17 +278,17 @@ const Header = () => {
                         <Close />
                     </IconButton>
                     <Box>
-                        <Typography variant="h5" sx={{ fontWeight: "700", textAlign: "center", textTransform: "uppercase" }}>Rescues by You</Typography>
+                        <Typography variant="h5" sx={{ fontWeight: "700", textAlign: "center", textTransform: "uppercase" }}>Your Rescues</Typography>
                         <List sx={{ width: '100%', maxWidth: "100%", bgcolor: 'background.paper' }}>
                             <Divider sx={{ width: "100%" }} />
                             {UserRescue.length === 0 && <Typography sx={{ pt: "1rem" }}>You Have No Reported Rescues...</Typography>}
                             {UserRescue.map((r) => (
                                 <ListItem alignItems="center" key={r.id}>
                                     <ListItemAvatar>
-                                        <Avatar alt={`Rescue By ${r.name}`} src={r.img} />
+                                        <Avatar alt={`Rescue By ${r.name}`} src={r.photoUrl} />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={r.timestamp}
+                                        primary={`On ${r.date} ${r.time}`}
                                         secondary={
                                             <React.Fragment>
                                                 <Typography
@@ -298,7 +296,7 @@ const Header = () => {
                                                     variant="body2"
                                                     color="text.primary"
                                                 >
-                                                    {r.location[0].address}
+                                                    {r.location.formattedLocation}
                                                 </Typography>
                                             </React.Fragment>
                                         }
@@ -336,7 +334,7 @@ const Header = () => {
                                                     variant="body2"
                                                     color="text.primary"
                                                 >
-                                                    {r.location[0].address}
+                                                    {r.location.formattedLocation}
                                                 </Typography>
                                             </React.Fragment>
                                         }

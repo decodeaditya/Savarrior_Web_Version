@@ -10,11 +10,11 @@ import { FirebaseContext } from '../../Context/FirebaseData'
 const Rescues = () => {
     const {RescuesList} = useContext(FirebaseContext)
     return (
-        <Box sx={{ textAlign: "center", p: "5rem 2rem" }}>
-            <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>Rescues Need Your Help</Typography>
+        <Box sx={{ textAlign: "center", p: {md:"4rem 2rem",xs:"3rem 2.3rem"} }}>
+            <Typography sx={{ fontSize:{md:"30px",xs:'22px'},fontWeight: "900", letterSpacing: "-0.04rem",textTransform:"uppercase" }}>Rescues Need Your Help</Typography>
             <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Help the Recent reported Rescues</Typography>
-            <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "1rem", background: colors.primary }} />
-            <Grid container sx={{justifyContent:"center",py:"2rem"}}>
+            <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "0.8rem", background: colors.primary }} />
+            <Grid container sx={{justifyContent:"center",py:{md:"2rem",xs:"10px"}}}>
                 {RescuesList?.slice(0,3).map((rescue) => (
                     <Grid item>
                         <RescueCard rescue={rescue} key={rescue.id}/>

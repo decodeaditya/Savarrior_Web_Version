@@ -20,7 +20,7 @@ const AgencyPage = ({ url }) => {
             return r;
         }
         else {
-            return `${r.name.toLowerCase()}${r.location.toLowerCase()}`.includes(query.toLowerCase())
+            return `${r?.name?.toLowerCase()}${r?.location?.toLowerCase()}`.includes(query.toLowerCase())
         }
     })
 

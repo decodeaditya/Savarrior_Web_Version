@@ -17,178 +17,178 @@ export default function Register() {
     const [name, setName] = useState(CurrentUser ? CurrentUser.displayName : "")
     const [countryCode, setCode] = React.useState("+91")
     const [phone, setPhone] = React.useState("")
-    const finalPhone = countryCode+phone
+    const finalPhone = countryCode + phone
     const [isNgo, setIsNgo] = useState(false)
     const [location, setLocation] = useState("")
     const [services, setServices] = useState([])
     const Navigate = useNavigate()
 
 
-    const setUp = () => {
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-            'size': 'invisible',
-            'callback': (response) => {
-                console.log("Captcha Resolved");
-                handleSubmit();
-            }
-        }, auth);
-    }
+    // const setUp = () => {
+    //     window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+    //         'size': 'invisible',
+    //         'callback': (response) => {
+    //             console.log("Captcha Resolved");
+    //             handleSubmit();
+    //         }
+    //     }, auth);
+    // }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const data = new FormData(e.currentTarget)
-        const profileImg = data.get('avatar')
-        const ngoImage = data.get("ngoImage")
-        const email = data.get("email")
-        const pass = data.get("password")
-        const slug = name.replace(" ", "-").toLowerCase()
+        // const data = new FormData(e.currentTarget)
+        // const profileImg = data.get('avatar')
+        // const ngoImage = data.get("ngoImage")
+        // const email = data.get("email")
+        // const pass = data.get("password")
+        // const slug = name.replace(" ", "-").toLowerCase()
 
-        setUp()
+        // setUp()
 
-        const phoneNumber = finalPhone;
-        const appVerifier = window.recaptchaVerifier;
+        // const phoneNumber = finalPhone;
+        // const appVerifier = window.recaptchaVerifier;
 
-        await signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-                const code = prompt(`Enter Otp Sent to ${finalPhone}`);
+        // await signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        //     .then((confirmationResult) => {
+        //         const code = prompt(`Enter Otp Sent to ${finalPhone}`);
 
-                if (CurrentUser?.isAnonymous) {
-                    const phoneCredential = PhoneAuthProvider.credential(confirmationResult.verificationId, code)
+        //         if (CurrentUser?.isAnonymous) {
+        //             const phoneCredential = PhoneAuthProvider.credential(confirmationResult.verificationId, code)
 
-                    linkWithCredential(auth.currentUser, phoneCredential)
-                        .then(async (usercred) => {
-                            const user = usercred.user;
-                            const emailCredential = EmailAuthProvider.credential(email, pass);
+        //             linkWithCredential(auth.currentUser, phoneCredential)
+        //                 .then(async (usercred) => {
+        //                     const user = usercred.user;
+        //                     const emailCredential = EmailAuthProvider.credential(email, pass);
 
-                            await linkWithCredential(auth.currentUser, emailCredential)
-                                .then((usercred) => {
-                                    const user = usercred.user;
+        //                     await linkWithCredential(auth.currentUser, emailCredential)
+        //                         .then((usercred) => {
+        //                             const user = usercred.user;
 
-                                    const storageRef = ref(storage, name + user.uid);
-                                    const uploadTask = uploadBytesResumable(storageRef, profileImg);
+        //                             const storageRef = ref(storage, name + user.uid);
+        //                             const uploadTask = uploadBytesResumable(storageRef, profileImg);
 
-                                    uploadTask.on('state_changed',
-                                        (snapshot) => { },
-                                        (error) => {
-                                            alert(error)
-                                        },
-                                        () => {
-                                            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        //                             uploadTask.on('state_changed',
+        //                                 (snapshot) => { },
+        //                                 (error) => {
+        //                                     alert(error)
+        //                                 },
+        //                                 () => {
+        //                                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 
-                                                updateProfile(user, { displayName: name, email: email, photoURL: downloadURL })
+        //                                         updateProfile(user, { displayName: name, email: email, photoURL: downloadURL })
 
-                                                const userData = isNgo ? {
-                                                    id: user.uid,
-                                                    email: email,
-                                                    name: name,
-                                                    phone: finalPhone,
-                                                    img: downloadURL,
-                                                    isNgo,
-                                                    location: location,
-                                                    ngoImage: ngoImage,
-                                                    services: services,
-                                                    slug: slug,
-                                                } :
-                                                    {
-                                                        id: user.uid,
-                                                        email: email,
-                                                        name: name,
-                                                        phone: finalPhone,
-                                                        img: downloadURL,
-                                                        isNgo,
-                                                    }
+        //                                         const userData = isNgo ? {
+        //                                             id: user.uid,
+        //                                             email: email,
+        //                                             name: name,
+        //                                             phone: finalPhone,
+        //                                             img: downloadURL,
+        //                                             isNgo,
+        //                                             location: location,
+        //                                             ngoImage: ngoImage,
+        //                                             services: services,
+        //                                             slug: slug,
+        //                                         } :
+        //                                             {
+        //                                                 id: user.uid,
+        //                                                 email: email,
+        //                                                 name: name,
+        //                                                 phone: finalPhone,
+        //                                                 img: downloadURL,
+        //                                                 isNgo,
+        //                                             }
 
-                                                { !isNgo && setDoc(doc(db, "registeredUsers", user.uid), userData) }
-                                                { isNgo && setDoc(doc(db, "registeredNGOs", user.uid), userData) }
-                                                { isNgo && updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) }) }
+        //                                         { !isNgo && setDoc(doc(db, "registeredUsers", user.uid), userData) }
+        //                                         { isNgo && setDoc(doc(db, "registeredNGOs", user.uid), userData) }
+        //                                         { isNgo && updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) }) }
 
-                                            })
-                                        })
-                                        Navigate("/")
-                                }).catch((error) => {
-                                    alert(error.code.replace("-"," "))
-                                });
-                        }).catch((error) => {
-                            alert(error.code.replace("-"," "))
-                        });
-                }
-                else {
-                    confirmationResult.confirm(code).then((result) => {
-                        const user = result.user;
-                        const storageRef = ref(storage, name + user.uid);
-                        const uploadTask = uploadBytesResumable(storageRef, profileImg);
+        //                                     })
+        //                                 })
+        //                                 Navigate("/")
+        //                         }).catch((error) => {
+        //                             alert(error.code.replace("-"," "))
+        //                         });
+        //                 }).catch((error) => {
+        //                     alert(error.code.replace("-"," "))
+        //                 });
+        //         }
+        //         else {
+        //             confirmationResult.confirm(code).then((result) => {
+        //                 const user = result.user;
+        //                 const storageRef = ref(storage, name + user.uid);
+        //                 const uploadTask = uploadBytesResumable(storageRef, profileImg);
 
-                        uploadTask.on('state_changed',
-                            (snapshot) => { },
-                            (error) => {
-                                alert(error)
-                            },
-                            () => {
-                                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        //                 uploadTask.on('state_changed',
+        //                     (snapshot) => { },
+        //                     (error) => {
+        //                         alert(error)
+        //                     },
+        //                     () => {
+        //                         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 
-                                    updateProfile(user, { displayName: name, email: email, photoURL: downloadURL })
-                                    const emailCredential = EmailAuthProvider.credential(email, pass);
-                                    linkWithCredential(auth.currentUser, emailCredential)
-                                        .then((usercred) => {
-                                            const user = usercred.user;
-                                            console.log("Account linking success", user);
-                                        }).catch((error) => {
-                                            alert("Account linking error", error);
-                                        });
+        //                             updateProfile(user, { displayName: name, email: email, photoURL: downloadURL })
+        //                             const emailCredential = EmailAuthProvider.credential(email, pass);
+        //                             linkWithCredential(auth.currentUser, emailCredential)
+        //                                 .then((usercred) => {
+        //                                     const user = usercred.user;
+        //                                     console.log("Account linking success", user);
+        //                                 }).catch((error) => {
+        //                                     alert("Account linking error", error);
+        //                                 });
 
 
-                                    const userData = isNgo ? {
-                                        id: user.uid,
-                                        email: email,
-                                        name: name,
-                                        phone: finalPhone,
-                                        img: downloadURL,
-                                        isNgo,
-                                        location: location,
-                                        ngoImage: ngoImage,
-                                        services: services,
-                                        slug: slug
-                                    } :
-                                        {
-                                            id: user.uid,
-                                            email: email,
-                                            name: name,
-                                            phone: finalPhone,
-                                            img: downloadURL,
-                                            isNgo,
-                                        }
+        //                             const userData = isNgo ? {
+        //                                 id: user.uid,
+        //                                 email: email,
+        //                                 name: name,
+        //                                 phone: finalPhone,
+        //                                 img: downloadURL,
+        //                                 isNgo,
+        //                                 location: location,
+        //                                 ngoImage: ngoImage,
+        //                                 services: services,
+        //                                 slug: slug
+        //                             } :
+        //                                 {
+        //                                     id: user.uid,
+        //                                     email: email,
+        //                                     name: name,
+        //                                     phone: finalPhone,
+        //                                     img: downloadURL,
+        //                                     isNgo,
+        //                                 }
 
-                                    { !isNgo && setDoc(doc(db, "registeredUsers", user.uid), userData) }
-                                    { isNgo && setDoc(doc(db, "registeredNGOs", user.uid), userData) }
-                                    { isNgo && updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) }) }
+        //                             { !isNgo && setDoc(doc(db, "registeredUsers", user.uid), userData) }
+        //                             { isNgo && setDoc(doc(db, "registeredNGOs", user.uid), userData) }
+        //                             { isNgo && updateDoc(doc(db, "ngos", "ngos"), { ngoList: arrayUnion(userData) }) }
 
-                                });
-                            })
-                    })
-                    Navigate("/")
-                }
+        //                         });
+        //                     })
+        //             })
+        //             Navigate("/")
+        //         }
 
-                window.confirmationResult = confirmationResult;
-            }).catch((error) => {
-                // Error; SMS not sent
-                // ...
-                alert(error)
-            });
+        //         window.confirmationResult = confirmationResult;
+        //     }).catch((error) => {
+        //         // Error; SMS not sent
+        //         // ...
+        //         alert(error)
+        //     });
     }
 
-    const handleChecked = (e) => {
-        if (e.target.checked === true) {
-            services.push(e.target.value)
-        }
-        else {
-            const ele = services.filter((service) => {
-                return service !== e.target.value
-            })
-            setServices(ele)
-        }
-    }
+    // const handleChecked = (e) => {
+    //     if (e.target.checked === true) {
+    //         services.push(e.target.value)
+    //     }
+    //     else {
+    //         const ele = services.filter((service) => {
+    //             return service !== e.target.value
+    //         })
+    //         setServices(ele)
+    //     }
+    // }
 
     const Guest = CurrentUser?.isAnonymous
 
@@ -211,7 +211,7 @@ export default function Register() {
                     backgroundPosition: 'center',
                 }}
             >
-                <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src={logo}width={"120px"} alt="Savarrior" /></Box></Link>
+                <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src={logo} width={"120px"} alt="Savarrior" /></Box></Link>
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box
@@ -230,46 +230,28 @@ export default function Register() {
                         Register
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: "1.1rem" }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="name"
-                            label="Full Name"
-                            name="name"
-                            autoComplete="name"
-                            autoFocus
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            type="email"
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="password"
-                            label="Password"
-                            name="password"
-                            type="password"
-                            autoFocus
-                        />
-                        <div id="recaptcha-container"></div>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Box sx={{ background: "#f1f1f1", p: "15px", borderRadius: "15px",textAlign:"center" }}>
+                            <Box
+                                component="img"
+                                sx={{
+                                    width: '50%',
+                                    objectFit: "cover",
+                                    borderRadius: "5px",
+                                    padding:2
+                                }}
+                                alt={"Download App"}
+                                src={"https://cdn-icons-png.flaticon.com/512/3367/3367584.png"}
+                            />
+                            <Typography variant="h5" sx={{ fontWeight: "800", textTransform: "uppercase",textAlign:"center" }}>Want to Join Us?</Typography>
+                            <Typography variant="h6" sx={{ fontWeight: "600", fontSize: "17px" }}>Get Our Latest Savarrior App to Register and Then Coutinue!</Typography>
+                        </Box>
+
+                        {/* <Box sx={{ display: "flex", alignItems: "center" }}>
                             <TextField sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} disabled/>
                             <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </Box>
-                        <Box sx={{ display: "flex", alignItems: "center", my: "15px", p: "15px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}><Typography >Profile Image :&nbsp; </Typography> <input type="file" name="avatar" accept='image/*' /></Box>
-                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: "15px", mb: 0, p: "15px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", my: "15px", p: "15px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}><Typography >Profile Image :&nbsp; </Typography> <input type="file" name="avatar" accept='image/*' /></Box> */}
+                        {/* <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: "15px", mb: 0, p: "15px 10px", border: "1px solid #c1c1c1", borderRadius: "5px" }}>
                             <Checkbox value={isNgo} onChange={(e) => { setIsNgo(e.target.checked) }} /> Are You a Animal NGO?
                         </Box>
                         {isNgo &&
@@ -293,15 +275,17 @@ export default function Register() {
                                 </Box>
                                 <TextField name="ngoImage" label="A Image Link" type="url" fullWidth />
                             </>
-                        }
+                        } */}
+                        <Link to="/download-app">
                         <SquareButton
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Register
+                            Download App Now
                         </SquareButton>
+                        </Link>
                         <Box sx={{ mb: { xs: "4rem", md: 0 }, display: 'flex', justifyContent: "center" }}>
                             Have an account?&nbsp;
                             <Link to="/login" style={{ color: colors.primary }}>

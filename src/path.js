@@ -4,7 +4,7 @@ export const path = {
     ngo:"/ngos-and-people",
     register:"/register",
     login:"/login",
-    report:"/report-a-rescue"
+    report:"/download-app"
 }
 
 

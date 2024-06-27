@@ -12,6 +12,7 @@ import Register from "./Pages/Register";
 import { useEffect } from 'react';
 import Report from "./Pages/Report";
 import OneSignal from "react-onesignal";
+import AppPage from "./Pages/AppPage";
 
 function App() {
 
@@ -44,7 +45,7 @@ function App() {
           <Route path="/ngo/:slug/:id" element={<SingleAgency url={url} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/report-a-rescue" element={<Report url={url} />} />
+          <Route path="/download-app" element={<AppPage url={url} />} />
         </Routes>
         <div><Footer /></div>
       </BrowserRouter>

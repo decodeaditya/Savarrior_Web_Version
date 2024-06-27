@@ -4,6 +4,7 @@ import Rescues from './Rescues'
 import Join from './Join'
 import Agencies from './Agencies'
 import { Helmet } from 'react-helmet'
+import DownloadApp from './DownloadApp'
 
 const HomePage = ({ url }) => {
   return (
@@ -12,6 +13,7 @@ const HomePage = ({ url }) => {
         <title>{url}</title>
       </Helmet>
       <HeroSection />
+      <DownloadApp/>
       <Rescues />
       <Join />
       <Agencies />

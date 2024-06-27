@@ -26,20 +26,19 @@ export const Theme = createTheme({
 export const Button = styled(MuiButton)(({ theme }) => ({
   background: "#329c92",
   borderRadius: "25px",
-  fontSize: "16px",
+  fontSize: "18px",
   ['&:hover']: {
     background: "#329c92",
   },
   [theme.breakpoints.down("md")]: {
-    marginLeft: "10px",
-    fontSize: "14px"
+    fontSize: "16px"
   }
 }));
 
 export const SquareButton = styled(MuiButton)((props) => ({
   background: "#329c92",
-  borderRadius: "0",
-  fontSize: "16px",
+  borderRadius: "0px",
+  fontSize: "18px",
   ['&:hover']: {
     background: "#329c92",
   }

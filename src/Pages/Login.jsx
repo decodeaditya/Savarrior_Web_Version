@@ -15,15 +15,15 @@ export default function Login() {
   const Navigate = useNavigate()
 
 
-  const setUp = () => {
-    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-      'size': 'invisible',
-      'callback': (response) => {
-        console.log("Captcha Resolved");
-        handleSubmit();
-      }
-    }, auth);
-  }
+  // const setUp = () => {
+  //   window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+  //     'size': 'invisible',
+  //     'callback': (response) => {
+  //       console.log("Captcha Resolved");
+  //       handleSubmit();
+  //     }
+  //   }, auth);
+  // }
 
   const [countryCode, setCode] = React.useState("+91")
   const [phone, setPhone] = React.useState("")
@@ -35,29 +35,29 @@ export default function Login() {
     const data = new FormData(e.currentTarget)
 
     if (method === "phone") {
-      setUp()
+      // setUp()
 
-      const phoneNumber = finalPhone;
-      const appVerifier = window.recaptchaVerifier;
+      // const phoneNumber = finalPhone;
+      // const appVerifier = window.recaptchaVerifier;
 
-      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          const code = prompt(`Enter Otp Sent to ${phoneNumber}`);
-          confirmationResult.confirm(code).then((result) => {
-            const user = result.user;
-            console.log(user)
-            Navigate("/")
-          }).catch((error) => {
-            // User couldn't sign in (bad verification code?)
-            // ...
-            alert(error)
-          });
-          window.confirmationResult = confirmationResult;
-        }).catch((error) => {
-          // Error; SMS not sent
-          // ...
-          alert(error)
-        });
+      // signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      //   .then((confirmationResult) => {
+      //     const code = prompt(`Enter Otp Sent to ${phoneNumber}`);
+      //     confirmationResult.confirm(code).then((result) => {
+      //       const user = result.user;
+      //       console.log(user)
+      //       Navigate("/")
+      //     }).catch((error) => {
+      //       // User couldn't sign in (bad verification code?)
+      //       // ...
+      //       alert(error)
+      //     });
+      //     window.confirmationResult = confirmationResult;
+      //   }).catch((error) => {
+      //     // Error; SMS not sent
+      //     // ...
+      //     alert(error)
+      //   });
     }
     else {
       const email = data.get("email")
@@ -146,17 +146,19 @@ export default function Login() {
               </>}
             {method === "phone" &&
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <TextField sx={{ my: 1, mr: 1, width: "20%" }} name="code" id="code" value={countryCode} onChange={(e) => setCode(e.target.value)} disabled />
-                <TextField label="Phone" sx={{ my: 1, width: "80%" }} name="phone" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Box sx={{ background: "#f1f1f1", p: "15px", borderRadius: "15px",textAlign:"center" }}>
+                <Typography variant="h6" sx={{ fontWeight: "600", fontSize: "17px" }}>We are Working on OTP Verification Method, It will be Available Soon</Typography>
+                </Box>
               </Box>
             }
             <SquareButton
               type="submit"
+              disabled={method === "phone" ? true : false}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {method === "phone" ? "Get Otp" : "Sign In"}
+             {method === "phone" ? "OTP Method Coming Soon" : "Login"}
             </SquareButton>
             <SquareButton
               fullWidth

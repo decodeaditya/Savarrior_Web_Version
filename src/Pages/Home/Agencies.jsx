@@ -11,11 +11,11 @@ const Agencies = () => {
     const {NgosList} = useContext(FirebaseContext)
 
     return (
-        <Box sx={{ textAlign: "center", p: "5rem 2rem" }}>
-            <Typography variant="h4" sx={{ fontWeight: "800", letterSpacing: "-0.04rem", textTransform: "uppercase" }}>Connect with NGOs</Typography>
+        <Box sx={{ textAlign: "center", p: {md:"4rem 2rem",xs:"3rem 2.3rem"} }}>
+            <Typography sx={{ fontWeight: "900", fontSize:{md:"30px",xs:'24px'}, letterSpacing: "-0.04rem", textTransform: "uppercase" }}>Connect with NGOs</Typography>
             <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Help the Recent reported Rescues</Typography>
             <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "1rem", background: colors.primary }} />
-            <Grid container sx={{ justifyContent: "center", py: "2rem" }}>
+            <Grid container sx={{ justifyContent: "center", py: {md:"2rem",xs:"10px"} }}>
                 {NgosList?.slice(0, 3).map((ngo) => (
                     <Grid item>
                         <AgencyCard agency={ngo} key={ngo.id} />

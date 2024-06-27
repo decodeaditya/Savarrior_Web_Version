@@ -10,8 +10,8 @@ const Join = () => {
     <Box sx={{ background: "#f1f1f1", p: { md: "4rem 2rem", xs: "4rem 0.7rem" }, textAlign: "center" }}>
       <Grid container sx={{ justifyContent: "space-around", py: "1rem", maxWidth: { md: "89%", xs: "100%" }, margin: "auto", alignItems: "center" }}>
         <Grid item sx={{ width: { md: "50%", xs: "100%" }, p: "0.6rem" }}>
-          <img src="https://img.freepik.com/premium-photo/brown-stray-dog-with-poor-thin-body-eats-yogurt-from-hands-people-walking-along-street-park-dog-s-nose-yogurt_348487-887.jpg?w=2000" width="100%" alt="Join Us" style={{
-            borderRadius: "5px",
+          <img src="https://www.globalgiving.org/pfil/21618/ph_21618_80310.jpg" width="100%" alt="Join Us" style={{
+            borderRadius: "10px",
           }} />
         </Grid>
         <Grid item sx={{ width: { md: "44%", xs: "100%" }, textAlign: "left", p: "10px 20px" }}>

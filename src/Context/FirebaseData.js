@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { onSnapshot, doc, } from 'firebase/firestore';
+import { onSnapshot, doc,collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export const FirebaseContext = createContext()
@@ -10,22 +10,30 @@ export const FirebaseContextProvider = ({ children }) => {
     const [NgosList, setNgo] = useState([])
 
     useEffect(() => {
-        const rescues = onSnapshot(doc(db, "reportedRescues", "reportedRescues"), (doc) => {
-            doc.exists() && setRescues(doc.data().rescues)
+        return onSnapshot(collection(db, "rescues"), (snapshot) => {
+            const list = []
+            snapshot.forEach((doc) => {
+                const present = RescuesList.find((item) => item.id === doc.data().id)
+                if (!present) {
+                    list.push(doc.data())
+                }
+            })
+            setRescues(list)
         })
-        return () => {
-            rescues()
-        }
     }, [])
 
 
     useEffect(() => {
-        const ngos = onSnapshot(doc(db, "ngos", "ngos"), (doc) => {
-            doc.exists() && setNgo(doc.data().ngoList)
+        return onSnapshot(collection(db, "ngos"), (snapshot) => {
+            const list = []
+            snapshot.forEach((doc) => {
+                const present = NgosList.find((item) => item.id === doc.data().id)
+                if (!present) {
+                    list.push(doc.data())
+                }
+            })
+            setNgo(list)
         })
-        return () => {
-            ngos()
-        }
     }, [])
 
     return (

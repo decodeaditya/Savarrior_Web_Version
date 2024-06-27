@@ -25,7 +25,7 @@ const RescuePage = ({url}) => {
         }
         //return the item which contains the user input
         else{
-            return `${r.name.toLowerCase()}${r.location[0].address.toLowerCase()}`.includes(query.toLowerCase())
+            return `${r.name?.toLowerCase()}${r.location.formattedLocation?.toLowerCase()}`.includes(query.toLowerCase())
         }
     })
 
