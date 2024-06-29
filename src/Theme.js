@@ -10,10 +10,11 @@ export const colors = {
 export const Theme = createTheme({
   typography: {
     fontFamily: [
-      "Urbanist",
+      "Poppins",
       "sans-serif"
     ].join(","),
-    fontWeight: "800"
+    fontWeight: "500",
+    
   },
   palette: {
     primary: { main: "#329c92" },
@@ -25,10 +26,13 @@ export const Theme = createTheme({
 
 export const Button = styled(MuiButton)(({ theme }) => ({
   background: "#329c92",
-  borderRadius: "25px",
-  fontSize: "18px",
+  borderRadius: "40px",
+  boxShadow:"none",
+  fontSize: "16px",
+  padding:"0.6rem 1.3rem",
   ['&:hover']: {
     background: "#329c92",
+    boxShadow:"none"
   },
   [theme.breakpoints.down("md")]: {
     fontSize: "16px"
