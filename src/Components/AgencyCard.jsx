@@ -1,12 +1,11 @@
-import { LocationOnRounded,MiscellaneousServices } from '@mui/icons-material'
-import { Typography, Box, Grid, Stack, Chip, } from '@mui/material'
+import { Typography, Box, Grid,} from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { colors, Button } from '../Theme'
 
 const AgencyCard = (props) => {
 
-  const slug = props.agency.name.toLowerCase().split(' ').join('-')
+  const slug = props.agency.name.trim().toLowerCase().split(' ').join('-')
 
   return (
     <Box sx={{
@@ -38,7 +37,7 @@ const AgencyCard = (props) => {
     WebkitBoxOrient: "vertical",}}>{props.agency?.location}</Typography></Box>
       </Box>
       <Grid container sx={{mt: "10px", padding: "1rem", paddingTop: 0 }}>
-        <Link style={{width:"100%",textDecoration:"none"}} to={`/ngo/${slug}/${props.agency.id}`}> <Button variant="contained" sx={{ width:"100%", textTransform: "capitalize",border:`1px solid ${colors.primary}`,background:"#3c726d", }} >View</Button></Link>
+        <Link style={{width:"100%",textDecoration:"none"}} to={`/ngo/${slug}/${props.agency.id}/`}> <Button variant="contained" sx={{ width:"100%", textTransform: "capitalize",border:`1px solid ${colors.primary}`,background:"#3c726d", }} >View</Button></Link>
       </Grid>
     </Box>
   )

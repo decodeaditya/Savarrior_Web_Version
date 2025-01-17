@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Avatar, CssBaseline, Paper, Box, Grid, Typography } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Button, colors } from '../Theme';
+import { CssBaseline, Paper, Box, Grid, Typography } from '@mui/material';
+import { Button} from '../Theme';
 import { Link, useNavigate, } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
 import { Helmet } from 'react-helmet';
@@ -38,7 +37,6 @@ export default function Register() {
                     backgroundPosition: 'center',
                 }}
             >
-                <Link to="/"><Box sx={{ position: "absolute", background: "#fff", p: '10px', borderRadius: "5px", top: '5px', left: '5px' }}><img src={logo} width={"120px"} alt="Savarrior" /></Box></Link>
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box
@@ -50,12 +48,7 @@ export default function Register() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: colors.primary }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Register
-                    </Typography>
+                    <Link to="/"><Box sx={{ background: "#fff", pt: '20px', borderRadius: "5px", }}><img src={logo} width={"120px"} alt="Savarrior" /></Box></Link>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: "1.1rem" }}>
                         <Box sx={{ background: "#f1f1f1", p: "15px", borderRadius: "15px",textAlign:"center" }}>
                             <Box

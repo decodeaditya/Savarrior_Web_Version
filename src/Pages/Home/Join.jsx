@@ -18,12 +18,12 @@ const Join = () => {
           }} />
         </Grid>
         <Grid item sx={{ width: { md: "44%", xs: "100%" }, textAlign: "left", p: "10px 20px" }}>
-          <Typography variant="h4" sx={{ fontWeight: "600", letterSpacing: "-0.04rem", textTransform: "uppercase" }}>We Need More Heros!</Typography>
-          <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: "18px" }}>Small acts of kindness and help can add up to make a big impact</Typography>
+          <Typography sx={{ fontWeight: "600", letterSpacing: "-0.04rem", textTransform: "uppercase",fontSize:{md:"40px",xs:"27px"} }}>We Need More Heros!</Typography>
+          <Typography variant="body1" sx={{ my: "5px", fontWeight: "400", fontSize: {md:"18px",xs:"17px"} }}>Small acts of kindness and help can add up to make a big impact</Typography>
           <Divider sx={{ width: "80px", height: '4px', my: "0.6rem", background: colors.primary, mb: "1.4rem" }} />
 
-          <Typography sx={{ display: "flex", alignItems: "center", fontSize: "20px", fontWeight: "600" }}><img style={{ width: "40px", padding: "8px", marginRight: "8px",  }} src={alone} /> If you're an INDIVIDUAL with a desire to help animals, We need you!</Typography>
-          <Typography sx={{ display: "flex", alignItems: "center", fontSize: "20px", fontWeight: "600", mt: "18px" }}><img style={{ width: "40px", padding: "8px", marginRight: "8px", }} src={ngoicon}/>  If you're an ORGANIZATION with a desire to help animals, We need you!</Typography>
+          <Typography sx={{ display: "flex", alignItems: "center", fontSize: {md:"19px",xs:"18px"}, fontWeight: "600" }}><img style={{ width: "40px", padding: "8px", marginRight: "8px",  }} src={alone} /> If you're an INDIVIDUAL with a desire to help animals, We need you!</Typography>
+          <Typography sx={{ display: "flex", alignItems: "center", fontSize: {md:"19px",xs:"18px"}, fontWeight: "600", mt: "18px" }}><img style={{ width: "40px", padding: "8px", marginRight: "8px", }} src={ngoicon}/>  If you're an ORGANIZATION with a desire to help animals, We need you!</Typography>
           <Link to={path.register} style={{ textDecoration: "none" }}>
             <Button variant='contained' sx={{ mt: "2rem" }}>Join Now!</Button>
           </Link>

@@ -9,6 +9,7 @@ import AgencyPage from "./Pages/Agency/AgencyPage";
 import SingleAgency from "./Pages/SingleAgency/SingleAgency";
 import Register from "./Pages/Register";
 import AppPage from "./Pages/AppPage";
+import AboutPage from "./Pages/About";
 
 function App() {
 
@@ -20,11 +21,12 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" index element={<HomePage url={url} />} />
-          <Route path="/rescues" element={<RescuePage url={url} />} />
-          <Route path="/ngos-and-people" element={<AgencyPage url={url} />} />
-          <Route path="/ngo/:slug/:id" element={<SingleAgency url={url} />} />
+          <Route path="/about" element={<AboutPage/>} />
+          <Route path="/rescues" element={<RescuePage/>} />
+          <Route path="/ngos-and-people" element={<AgencyPage/>} />
+          <Route path="/ngo/:slug/:id" element={<SingleAgency/>} />
           <Route path="/register" element={<Register />} />
-          <Route path="/download-app" element={<AppPage url={url} />} />
+          <Route path="/download-app" element={<AppPage/>} />
         </Routes>
         <div><Footer /></div>
       </BrowserRouter>

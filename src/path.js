@@ -1,10 +1,11 @@
 export const path = {
     home:"/",
-    rescue:"/rescues",
-    ngo:"/ngos-and-people",
-    register:"/register",
-    login:"/login",
-    report:"/download-app"
+    about:"/about/",
+    rescue:"/rescues/",
+    ngo:"/ngos-and-people/",
+    register:"/register/",
+    login:"/login/",
+    report:"/download-app/"
 }
 
 
