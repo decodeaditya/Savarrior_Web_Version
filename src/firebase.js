@@ -10,12 +10,12 @@ import {getMessaging} from "firebase/messaging"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCJXQjkIiMSxVs2ASy5eV8k8tYfJtrrOVU",
-  authDomain: "savarrior-web.firebaseapp.com",
-  projectId: "savarrior-web",
-  storageBucket: "savarrior-web.appspot.com",
-  messagingSenderId: "310461744278",
-  appId: "1:310461744278:web:8656e60ffca9633cc26eb7"
+  apiKey: "API_Key",
+  authDomain: "auth_domain",
+  projectId: "ID",
+  storageBucket: "bucket",
+  messagingSenderId: "senderID",
+  appId: "appID"
 };
 
 // Initialize Firebase
