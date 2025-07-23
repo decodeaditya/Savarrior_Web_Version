@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet'
 import headImg from '../Assets/header.jpg'
 import { Typography, styled, Grid, Divider, Box } from "@mui/material"
 import { colors } from '../Theme'
+import AG from "../Assets/AG.jpg"
+import SM from "../Assets/SM.jpg"
+import AD from "../Assets/AD.jpeg"
 
 function AboutPage() {
 
@@ -55,9 +58,9 @@ function AboutPage() {
                 <Typography sx={{ fontSize: { md: "25px", xs: '20px' }, fontWeight: "700", letterSpacing: "-0.04rem", textTransform: "capitalize", pt: "1rem" }}>Creators</Typography>
                 <Divider sx={{ width: "80px", margin: "auto", height: '4px', my: "0.8rem", background: colors.primary }} />
                 <Grid container sx={{ justifyContent: "center" }}>
-                    <Grid item sx={{ background: "#00000014", backdrop: "filter(8px)", padding: "1rem", width: "220px", margin: "10px", borderRadius: "20px", boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}><Typography sx={{ fontSize: { md: "20px", xs: '18px', }, fontWeight: "700", mt: "8px" }}>Aditya P</Typography><Typography sx={{ fontSize: { md: "18px", xs: '16px' }, fontWeight: "500", color: "#525252" }}>Programmer</Typography></Grid>
-                    <Grid item sx={{ background: "#00000014", backdrop: "filter(8px)", padding: "1rem", width: "220px", margin: "10px", borderRadius: "20px", boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}><Typography sx={{ fontSize: { md: "20px", xs: '18px' }, fontWeight: "700", mt: "8px" }}>Aditya Gupta</Typography><Typography sx={{ fontSize: { md: "18px", xs: '16px' }, fontWeight: "500", color: "#525252" }}>Graphics Designer</Typography></Grid>
-                    <Grid item sx={{ background: "#00000014", backdrop: "filter(8px)", padding: "1rem", width: "220px", margin: "10px", borderRadius: "20px", boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}><Typography sx={{ fontSize: { md: "20px", xs: '18px' }, fontWeight: "700", mt: "8px" }}>Sidarth M</Typography><Typography sx={{ fontSize: { md: "18px", xs: '16px' }, fontWeight: "500", color: "#525252" }}>Programmer</Typography></Grid>
+                    <Grid item sx={{ background: "#00000014", backdrop: "filter(8px)", padding: "1rem", width: "220px", margin: "10px", borderRadius: "20px", boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}><img style= {{borderRadius:"50%"}} width="120px" src={AD}/><Typography sx={{ fontSize: { md: "20px", xs: '18px', }, fontWeight: "700", mt: "8px" }}>Aditya</Typography><Typography sx={{ fontSize: { md: "18px", xs: '16px' }, fontWeight: "500", color: "#525252" }}>Founder</Typography></Grid>
+                    <Grid item sx={{ background: "#00000014", backdrop: "filter(8px)", padding: "1rem", width: "220px", margin: "10px", borderRadius: "20px", boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}><img style= {{borderRadius:"50%"}} width="120px" src={AG}/><Typography sx={{ fontSize: { md: "20px", xs: '18px' }, fontWeight: "700", mt: "8px" }}>Aditya Gupta</Typography><Typography sx={{ fontSize: { md: "18px", xs: '16px' }, fontWeight: "500", color: "#525252" }}>Design Guide</Typography></Grid>
+                    <Grid item sx={{ background: "#00000014", backdrop: "filter(8px)", padding: "1rem", width: "220px", margin: "10px", borderRadius: "20px", boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px' }}><img style= {{borderRadius:"50%"}} width="120px" src={SM}/><Typography sx={{ fontSize: { md: "20px", xs: '18px' }, fontWeight: "700", mt: "8px" }}>Sidarth M</Typography><Typography sx={{ fontSize: { md: "18px", xs: '16px' }, fontWeight: "500", color: "#525252" }}>Tech Guide</Typography></Grid>
                 </Grid>
                 <Typography sx={{ maxWidth: "750px", margin: "auto", marginTop: "10px" }}>Also, We would like to thank <strong>Robin Singh</strong>, <strong>Vidit Sharma</strong> and <strong>Shikhar Ahuja</strong> for their guidance, as without them this would not have been possible.</Typography>
             </Box>

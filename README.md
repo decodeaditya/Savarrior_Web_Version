@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+![welcome](src/Assets/sheep-1822137_960_720.jpg)
+# 🌱 SAVARRIOR_Web_Version
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**SAVARRIOR** is a life-saving mobile app for animal lovers, and this repository hosts the official website for the project.  
+The site helps users discover the app, learn about the mission behind it, and download the latest release.
 
-## Available Scripts
+> 🛠️ **Note:** This web version is now a **simple landing and download page** for the SAVARRIOR app.  
+> Previously, this was a full-featured web app — now it's focused on app distribution, mission info, and developer contact.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🐾 About the SAVARRIOR App
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+SAVARRIOR empowers you to take **quick, meaningful action** when an animal needs help.  
+It's a tool designed for compassion-driven individuals to engage in real-world change.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### ✅ Main Features:
+- 📸 **Report** animal cruelty or emergency cases  
+- 📍 **Connect** instantly with local veterinarians & rescue NGOs  
+- 📚 **Learn & live vegan** with facts, guides, and plant-based recipes  
+- 🔔 **Track status** of your reports & stay updated with alerts  
 
-### `npm test`
+> Make compassion your superpower. With SAVARRIOR, saving lives is just a tap away.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🖥️ About This Website
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This website serves 3 key purposes:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 📥 **App Download:** Direct access to the latest app releases (.apk files)
+- 📖 **Mission & Story:** Why SAVARRIOR was created and what it stands for
+- 👨‍💻 **Developer Contact:** Who built it, where to contribute, how to collaborate
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> 🧭 The website is no longer used as the full app platform.  
+> The main functionality now resides in the **Savarrior Mobile App**.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 💻 Tech Stack (Website)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Tool / Library       | Purpose                                |
+|----------------------|----------------------------------------|
+| **React**            | Front-end framework (SPA)              |
+| **React Router**     | Navigation between sections/pages      |
+| **HTML / CSS**       | Page structure and styling             |
+| **JavaScript**       | Functional logic and interaction       |
+| **Netlify / Vercel** | Hosting for deployment (optional)      |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🔥 Cool Highlights
 
-## Learn More
+- ⚡ Instant-loading, single-page React experience
+- 📱 Fully responsive and mobile-first by design
+- 🧭 Minimal and intuitive layout
+- 🌿 Built with compassion and impact at heart
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📥 Download SAVARRIOR
 
-### Code Splitting
+🚫 **Not available on Play Store**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+➡️ Get it from:
 
-### Analyzing the Bundle Size
+- 🌐 **[GitHub Releases →](https://github.com/decodeaditya/Savarrior_App_Version/releases/download/android/Savarrior.apk)**  
+  Download `.apk` files and source packages from the Releases section.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- 📄 **[Via This Website](https://savarrior.netlify.app/download-app/)**  
+  Visit the website’s _Download_ section to get the latest version directly.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🧠 Developer Info
 
-### Advanced Configuration
+Made with ❤️ by [**decodeaditya**](https://github.com/decodeaditya)  
+📧 Instragram: `https://instagram.com/decodeaditya`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Want to contribute ideas, raise issues, or support the project?  
+Feel free to fork, star, or submit a pull request anytime!
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📝 License
 
-### `npm run build` fails to minify
+This project and website are open-sourced under the **MIT License**.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> SAVARRIOR trademarks, branding, and mission content are © decodeaditya 2023–2025.  
+> For **educational, ethical, and non-commercial use only**.
+
+---
+
+## 🌟 Final Note
+
+> _"Be the voice for the voiceless — start with a tap. Your actions matter."_
+
+Thanks for visiting the SAVARRIOR Web Version! 💚
